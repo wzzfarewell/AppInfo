@@ -2,6 +2,8 @@ package com.ncu.appinfo.dao;
 
 import com.ncu.appinfo.entity.DevUser;
 
+import java.util.List;
+
 public interface DevUserMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface DevUserMapper {
     int updateByPrimaryKeySelective(DevUser record);
 
     int updateByPrimaryKey(DevUser record);
+
+    List<DevUser> listByAppId(Long appId);
 }

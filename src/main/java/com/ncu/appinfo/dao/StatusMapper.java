@@ -1,6 +1,7 @@
 package com.ncu.appinfo.dao;
 
 import com.ncu.appinfo.entity.Status;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,12 @@ public interface StatusMapper {
     List<Status> listByAppId(Long appId);
 
     List<String> listStatusByCode(String typeCode);
+
+    /**
+     * 把指定id的App设置为指定的APP状态
+     * @param appStatus Constant.AppStatus中的值
+     * @param appId
+     * @return
+     */
+    int updateAppStatus(@Param("appStatus")String appStatus, @Param("appId") Long appId);
 }

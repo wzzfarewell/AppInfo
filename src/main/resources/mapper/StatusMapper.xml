@@ -126,5 +126,10 @@
     select status_name
     from status where type_code = #{typeCode}
   </select>
+  <update id="updateAppStatus">
+    update app_status apps
+	set apps.status_id = (select s.id from status s where s.status_name = #{appStatus})
+		where apps.app_id = #{appId} and apps.status_id BETWEEN 1 and 5
+  </update>
 
 </mapper>
