@@ -119,8 +119,8 @@ public class AdminController {
 
     @PostMapping("/search-app")
     public String searchApp(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                     @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
-                                     AppSearchVo appSearchVo, Model model){
+                            @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                            AppSearchVo appSearchVo, Model model){
         model.addAttribute("appSearchVo", appSearchVo);
         model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, appSearchVo));
         return "admin/app-manage";
@@ -141,6 +141,17 @@ public class AdminController {
             attributes.addFlashAttribute("message", "操作失败！");
         }
         return "redirect:" + request.getContextPath() + "/admin/app-manage";
+    }
+
+    @PostMapping("/name-search")
+    public String nameSearch(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                             @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                             String appName, Model model){
+        AppSearchVo searchVo = new AppSearchVo();
+        searchVo.setAppName(appName);
+        model.addAttribute("appSearchVo", searchVo);
+        model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, searchVo));
+        return "admin/app-manage";
     }
 
 }

@@ -7,7 +7,9 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,12 +39,12 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field d-none d-md-block">
-                <form class="d-flex align-items-center h-100" action="#">
+                <form class="d-flex align-items-center h-100" method="post" action="${pageContext.request.contextPath}/admin/name-search">
                     <div class="input-group">
                         <div class="input-group-prepend bg-transparent">
-                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            <button type="submit" class="btn btn-sm mdi mdi-magnify"></button>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="查找APP">
+                        <input type="text" name="appName" class="form-control bg-transparent border-0" placeholder="查找APP">
                     </div>
                 </form>
             </div>
@@ -183,13 +185,13 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">创建时间</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.createTime}"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="<fmt:formatDate value='${appDetail.app.createTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">更新时间</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.updateTime}"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="<fmt:formatDate value='${appDetail.app.updateTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">

@@ -60,11 +60,11 @@
         <property name="maxInMemorySize" value="4096" />
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
-    <!--格式转换-->
+    <!--格式化配置-->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <!--<property name="converters">-->
         <!--<set>-->
-        <!--<bean class="org.example.MyConverter"/>-->
+            <!--<bean class="com.ncu.appinfo.web.conversion.DateConverter"/>-->
         <!--</set>-->
         <!--</property>-->
         <property name="formatters">

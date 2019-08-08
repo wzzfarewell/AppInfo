@@ -37,12 +37,12 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field d-none d-md-block">
-                <form class="d-flex align-items-center h-100" action="#">
+                <form class="d-flex align-items-center h-100" method="post" action="${pageContext.request.contextPath}/admin/name-search">
                     <div class="input-group">
                         <div class="input-group-prepend bg-transparent">
-                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            <button type="submit" class="btn btn-sm mdi mdi-magnify"></button>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="查找APP">
+                        <input type="text" name="appName" class="form-control bg-transparent border-0" placeholder="查找APP">
                     </div>
                 </form>
             </div>

@@ -26,27 +26,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+
 public class DateFormatter implements Formatter<Date> {
+    private static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+
     public DateFormatter() {
         super();
     }
 
     @Override
     public Date parse(final String text, final Locale locale) throws ParseException {
-        final SimpleDateFormat dateFormat = createDateFormat(locale);
-        return dateFormat.parse(text);
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
+        return sdf.parse(text);
     }
 
     @Override
     public String print(final Date object, final Locale locale) {
-        final SimpleDateFormat dateFormat = createDateFormat(locale);
-        return dateFormat.format(object);
-    }
-
-    private SimpleDateFormat createDateFormat(final Locale locale) {
-        final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        dateFormat.setLenient(false);
-        return dateFormat;
+        SimpleDateFormat sdf = new SimpleDateFormat(FORMAT);
+        return sdf.format(object);
     }
 
 }
