@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ncu.appinfo.dao.DevUserMapper" >
+  <resultMap id="BaseResultMap" type="com.ncu.appinfo.entity.DevUser" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="dev_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dev_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dev_password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dev_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dev_info" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dev_code, dev_name, dev_password, dev_email, dev_info, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from dev_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dev_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ncu.appinfo.entity.DevUser" >
+    insert into dev_user (id, dev_code, dev_name, 
+      dev_password, dev_email, dev_info, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{devCode,jdbcType=VARCHAR}, #{devName,jdbcType=VARCHAR}, 
+      #{devPassword,jdbcType=VARCHAR}, #{devEmail,jdbcType=VARCHAR}, #{devInfo,jdbcType=VARCHAR}, 
+      now(),now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.DevUser" >
+    insert into dev_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="devCode != null" >
+        dev_code,
+      </if>
+      <if test="devName != null" >
+        dev_name,
+      </if>
+      <if test="devPassword != null" >
+        dev_password,
+      </if>
+      <if test="devEmail != null" >
+        dev_email,
+      </if>
+      <if test="devInfo != null" >
+        dev_info,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="devCode != null" >
+        #{devCode,jdbcType=VARCHAR},
+      </if>
+      <if test="devName != null" >
+        #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="devPassword != null" >
+        #{devPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="devEmail != null" >
+        #{devEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="devInfo != null" >
+        #{devInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ncu.appinfo.entity.DevUser" >
+    update dev_user
+    <set >
+      <if test="devCode != null" >
+        dev_code = #{devCode,jdbcType=VARCHAR},
+      </if>
+      <if test="devName != null" >
+        dev_name = #{devName,jdbcType=VARCHAR},
+      </if>
+      <if test="devPassword != null" >
+        dev_password = #{devPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="devEmail != null" >
+        dev_email = #{devEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="devInfo != null" >
+        dev_info = #{devInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ncu.appinfo.entity.DevUser" >
+    update dev_user
+    set dev_code = #{devCode,jdbcType=VARCHAR},
+      dev_name = #{devName,jdbcType=VARCHAR},
+      dev_password = #{devPassword,jdbcType=VARCHAR},
+      dev_email = #{devEmail,jdbcType=VARCHAR},
+      dev_info = #{devInfo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

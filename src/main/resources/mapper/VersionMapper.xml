@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ncu.appinfo.dao.VersionMapper" >
+  <resultMap id="BaseResultMap" type="com.ncu.appinfo.entity.Version" >
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="version_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="version_info" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="download_url" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="download_count" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="version_size" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="apk_file_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="apk_loc_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, version_no, version_info, download_url, download_count, version_size, apk_file_name, 
+    apk_loc_path, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from version
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from version
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ncu.appinfo.entity.Version" >
+    insert into version (id, version_no, version_info, 
+      download_url, download_count, version_size, 
+      apk_file_name, apk_loc_path, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{versionNo,jdbcType=VARCHAR}, #{versionInfo,jdbcType=VARCHAR}, 
+      #{downloadUrl,jdbcType=VARCHAR}, #{downloadCount,jdbcType=BIGINT}, #{versionSize,jdbcType=DECIMAL}, 
+      #{apkFileName,jdbcType=VARCHAR}, #{apkLocPath,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.Version" >
+    insert into version
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="versionNo != null" >
+        version_no,
+      </if>
+      <if test="versionInfo != null" >
+        version_info,
+      </if>
+      <if test="downloadUrl != null" >
+        download_url,
+      </if>
+      <if test="downloadCount != null" >
+        download_count,
+      </if>
+      <if test="versionSize != null" >
+        version_size,
+      </if>
+      <if test="apkFileName != null" >
+        apk_file_name,
+      </if>
+      <if test="apkLocPath != null" >
+        apk_loc_path,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="versionNo != null" >
+        #{versionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="versionInfo != null" >
+        #{versionInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null" >
+        #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadCount != null" >
+        #{downloadCount,jdbcType=BIGINT},
+      </if>
+      <if test="versionSize != null" >
+        #{versionSize,jdbcType=DECIMAL},
+      </if>
+      <if test="apkFileName != null" >
+        #{apkFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="apkLocPath != null" >
+        #{apkLocPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ncu.appinfo.entity.Version" >
+    update version
+    <set >
+      <if test="versionNo != null" >
+        version_no = #{versionNo,jdbcType=VARCHAR},
+      </if>
+      <if test="versionInfo != null" >
+        version_info = #{versionInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadUrl != null" >
+        download_url = #{downloadUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="downloadCount != null" >
+        download_count = #{downloadCount,jdbcType=BIGINT},
+      </if>
+      <if test="versionSize != null" >
+        version_size = #{versionSize,jdbcType=DECIMAL},
+      </if>
+      <if test="apkFileName != null" >
+        apk_file_name = #{apkFileName,jdbcType=VARCHAR},
+      </if>
+      <if test="apkLocPath != null" >
+        apk_loc_path = #{apkLocPath,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ncu.appinfo.entity.Version" >
+    update version
+    set version_no = #{versionNo,jdbcType=VARCHAR},
+      version_info = #{versionInfo,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      download_count = #{downloadCount,jdbcType=BIGINT},
+      version_size = #{versionSize,jdbcType=DECIMAL},
+      apk_file_name = #{apkFileName,jdbcType=VARCHAR},
+      apk_loc_path = #{apkLocPath,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByAppId" resultMap="BaseResultMap">
+    select v.*
+    from app_version av join version v on av.version_id = v.id
+    where av.app_id = #{appId}
+  </select>
+</mapper>

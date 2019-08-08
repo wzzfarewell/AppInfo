@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ncu.appinfo.dao.AppMapper" >
+  <resultMap id="BaseResultMap" type="com.ncu.appinfo.entity.App" >
+    <constructor >
+      <idArg column="app_id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="app_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="apk_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="support_rom" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="language" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="app_size" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="app_info" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="logo_pic_path" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="on_sale_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="off_sale_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    app_id, app_name, apk_name, support_rom, `language`, app_size, app_info, logo_pic_path,
+    on_sale_time, off_sale_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from app
+    where app_id = #{appId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from app
+    where app_id = #{appId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.ncu.appinfo.entity.App" >
+    insert into app (app_id, app_name, apk_name, 
+      support_rom, `language`, app_size,
+      app_info, logo_pic_path, on_sale_time, 
+      off_sale_time, create_time, update_time
+      )
+    values (#{appId,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{apkName,jdbcType=VARCHAR}, 
+      #{supportRom,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, #{appSize,jdbcType=DECIMAL}, 
+      #{appInfo,jdbcType=VARCHAR}, #{logoPicPath,jdbcType=VARCHAR}, #{onSaleTime,jdbcType=TIMESTAMP}, 
+      #{offSaleTime,jdbcType=TIMESTAMP}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.App" >
+    insert into app
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        app_id,
+      </if>
+      <if test="appName != null" >
+        app_name,
+      </if>
+      <if test="apkName != null" >
+        apk_name,
+      </if>
+      <if test="supportRom != null" >
+        support_rom,
+      </if>
+      <if test="language != null" >
+        `language`,
+      </if>
+      <if test="appSize != null" >
+        app_size,
+      </if>
+      <if test="appInfo != null" >
+        app_info,
+      </if>
+      <if test="logoPicPath != null" >
+        logo_pic_path,
+      </if>
+      <if test="onSaleTime != null" >
+        on_sale_time,
+      </if>
+      <if test="offSaleTime != null" >
+        off_sale_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="appId != null" >
+        #{appId,jdbcType=BIGINT},
+      </if>
+      <if test="appName != null" >
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="apkName != null" >
+        #{apkName,jdbcType=VARCHAR},
+      </if>
+      <if test="supportRom != null" >
+        #{supportRom,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="appSize != null" >
+        #{appSize,jdbcType=DECIMAL},
+      </if>
+      <if test="appInfo != null" >
+        #{appInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="logoPicPath != null" >
+        #{logoPicPath,jdbcType=VARCHAR},
+      </if>
+      <if test="onSaleTime != null" >
+        #{onSaleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offSaleTime != null" >
+        #{offSaleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ncu.appinfo.entity.App" >
+    update app
+    <set >
+      <if test="appName != null" >
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="apkName != null" >
+        apk_name = #{apkName,jdbcType=VARCHAR},
+      </if>
+      <if test="supportRom != null" >
+        support_rom = #{supportRom,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        `language` = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="appSize != null" >
+        app_size = #{appSize,jdbcType=DECIMAL},
+      </if>
+      <if test="appInfo != null" >
+        app_info = #{appInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="logoPicPath != null" >
+        logo_pic_path = #{logoPicPath,jdbcType=VARCHAR},
+      </if>
+      <if test="onSaleTime != null" >
+        on_sale_time = #{onSaleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="offSaleTime != null" >
+        off_sale_time = #{offSaleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where app_id = #{appId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ncu.appinfo.entity.App" >
+    update app
+    set app_name = #{appName,jdbcType=VARCHAR},
+      apk_name = #{apkName,jdbcType=VARCHAR},
+      support_rom = #{supportRom,jdbcType=VARCHAR},
+      `language` = #{language,jdbcType=VARCHAR},
+      app_size = #{appSize,jdbcType=DECIMAL},
+      app_info = #{appInfo,jdbcType=VARCHAR},
+      logo_pic_path = #{logoPicPath,jdbcType=VARCHAR},
+      on_sale_time = #{onSaleTime,jdbcType=TIMESTAMP},
+      off_sale_time = #{offSaleTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where app_id = #{appId,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="listByStatus" resultMap="BaseResultMap">
+    select a.*
+    from app a join app_status apps on a.app_id = apps.app_id
+    join status s on apps.status_id = s.id
+    where s.status_name = #{statusName}
+    order by a.app_id asc
+  </select>
+</mapper>
