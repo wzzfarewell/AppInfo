@@ -128,4 +128,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+
+  <select id="selectByNameAndPwd" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from dev_user
+    where dev_name = #{name} and dev_password = #{password}
+  </select>
+
 </mapper>
