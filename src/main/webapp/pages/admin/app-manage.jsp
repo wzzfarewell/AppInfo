@@ -37,12 +37,12 @@
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field d-none d-md-block">
-                <form class="d-flex align-items-center h-100" action="#">
+                <form class="d-flex align-items-center h-100" method="post" action="${pageContext.request.contextPath}/admin/name-search">
                     <div class="input-group">
                         <div class="input-group-prepend bg-transparent">
-                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            <button type="submit" class="btn btn-sm mdi mdi-magnify"></button>
                         </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="查找APP">
+                        <input type="text" name="appName" class="form-control bg-transparent border-0" placeholder="查找APP">
                     </div>
                 </form>
             </div>
@@ -243,6 +243,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">APP列表</h4>
+                                <div class="text-muted text-danger">${message}</div>
                                 <table id="appLoadTable" class="table table-bordered">
                                     <thead>
                                     <tr class="text-primary">
@@ -268,7 +269,7 @@
                                             <td>${app.appStatus}</td>
                                             <td>${app.version.downloadCount}</td>
                                             <td>${app.version.versionNo}</td>
-                                            <td><i class="mdi mdi-pencil-box icon-md"></i></td>
+                                            <td><a href="${pageContext.request.contextPath}/admin/app/${app.appId}"><i class="mdi mdi-pencil-box icon-md"></i></a> </td>
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -295,9 +296,8 @@
             <!-- partial:partials/_footer.html -->
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a
-                    href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
+                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2019 All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">farewell & made with <i
                             class="mdi mdi-heart text-danger"></i></span>
                 </div>
             </footer>

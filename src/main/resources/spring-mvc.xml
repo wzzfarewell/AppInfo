@@ -17,7 +17,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--RequestMappingHandlerAdapter  开启自定义的格式化转换-->
-    <mvc:annotation-driven>
+    <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters register-defaults="true">
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
@@ -59,6 +59,24 @@
         <property name="maxUploadSize" value="10485760"/> <!-- 10m -->
         <property name="maxInMemorySize" value="4096" />
         <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+    <!--格式化配置-->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <!--<property name="converters">-->
+        <!--<set>-->
+            <!--<bean class="com.ncu.appinfo.web.conversion.DateConverter"/>-->
+        <!--</set>-->
+        <!--</property>-->
+        <property name="formatters">
+            <set>
+                <bean class="com.ncu.appinfo.web.conversion.DateFormatter"/>
+            </set>
+        </property>
+        <!--<property name="formatterRegistrars">-->
+        <!--<set>-->
+        <!--<bean class="org.example.MyFormatterRegistrar"/>-->
+        <!--</set>-->
+        <!--</property>-->
     </bean>
 
 </beans>

@@ -16,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -118,10 +119,38 @@ public class AdminController {
 
     @PostMapping("/search-app")
     public String searchApp(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                     @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
-                                     AppSearchVo appSearchVo, Model model){
+                            @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                            AppSearchVo appSearchVo, Model model){
         model.addAttribute("appSearchVo", appSearchVo);
         model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, appSearchVo));
+        return "admin/app-manage";
+    }
+
+    @GetMapping("/app/{id}")
+    public String appDetail(@PathVariable Long id, Model model){
+        model.addAttribute("appDetail", appService.getAppDetail(id));
+        return "admin/app-detail";
+    }
+
+    @GetMapping("/app-check/{id}")
+    public String appCheck(@PathVariable Long id, RedirectAttributes attributes, HttpServletRequest request){
+        int resultCount = appService.checkedApp(id);
+        if(resultCount > 0){
+            attributes.addFlashAttribute("message", "操作成功！");
+        }else{
+            attributes.addFlashAttribute("message", "操作失败！");
+        }
+        return "redirect:" + request.getContextPath() + "/admin/app-manage";
+    }
+
+    @PostMapping("/name-search")
+    public String nameSearch(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                             @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                             String appName, Model model){
+        AppSearchVo searchVo = new AppSearchVo();
+        searchVo.setAppName(appName);
+        model.addAttribute("appSearchVo", searchVo);
+        model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, searchVo));
         return "admin/app-manage";
     }
 
