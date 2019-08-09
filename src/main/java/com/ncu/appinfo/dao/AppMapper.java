@@ -24,4 +24,11 @@ public interface AppMapper {
      */
     List<App> listByStatus(String statusName);
 
+    /**
+     * 根据传入的开发者id查询App
+     * @param dev_id
+     * @return 按照app_id升序排列的APP列表
+     */
+    List<App> listByDevUser(Long dev_id);
+
 }

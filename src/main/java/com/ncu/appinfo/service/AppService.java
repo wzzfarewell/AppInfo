@@ -17,6 +17,8 @@ public interface AppService {
 
     PageInfo<AppVo> listUncheckedApp(int pageNum, int pageSize, AppSearchVo appSearchVo);
 
+    PageInfo<AppVo> listAppByDevUser(int pageNum, int pageSize, Long dev_id, AppSearchVo appSearchVo);
+
     List<String> listStatus(String typeCode);
 
     List<String> listCategory(String categoryCode);

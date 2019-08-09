@@ -31,8 +31,8 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo.svg" alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo-mini.svg"
+            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/developer/home"><img src="../../images/logo.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/developer/home"><img src="../../images/logo-mini.svg"
                                                                                                               alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
@@ -103,7 +103,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/home">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/developer/home">
                         <span class="menu-title">APP账户管理</span>
                         <i class="mdi mdi-account-multiple menu-icon"></i>
                     </a>
@@ -298,10 +298,10 @@
                                     <tr>
                                         <th colspan="9">
                                             <c:if test="${!page.isFirstPage}">
-                                                <a href="${pageContext.request.contextPath}/admin/app-manage?pageNum=${page.pageNum - 1}" class="">上一页</a>
+                                                <a href="${pageContext.request.contextPath}/developer/app-manage?pageNum=${page.pageNum - 1}" class="">上一页</a>
                                             </c:if>
                                             <c:if test="${!page.isLastPage}">
-                                                <a href="${pageContext.request.contextPath}/admin/app-manage?pageNum=${page.pageNum + 1}"  class="">下一页</a>
+                                                <a href="${pageContext.request.contextPath}/developer/app-manage?pageNum=${page.pageNum + 1}"  class="">下一页</a>
                                             </c:if>
                                         </th>
                                     </tr>

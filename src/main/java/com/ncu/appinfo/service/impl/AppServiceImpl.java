@@ -44,6 +44,75 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
+    public PageInfo<AppVo> listAppByDevUser(int pageNum, int pageSize, Long dev_id, final AppSearchVo appSearchVo) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<App> apps = appMapper.listByDevUser(dev_id);
+        List<AppVo> appVos = new ArrayList<>();
+        PageInfo pageInfo = new PageInfo(apps);
+        // 组装AppVo对象
+        for(App app : apps){
+            AppVo appVo = new AppVo();
+            // 基本信息
+            appVo.setApkName(app.getApkName());
+            appVo.setAppId(app.getAppId());
+            appVo.setAppName(app.getAppName());
+            appVo.setAppSize(app.getAppSize());
+            // 版本信息
+            appVo.setVersion(versionMapper.selectNewestByAppId(app.getAppId()));
+            // 分类信息
+            List<Category> categories = categoryMapper.listByAppId(app.getAppId());
+            for(Category category : categories){
+                if(category.getCategoryCode().equals(Constant.LEVEL1_CATEGORY)){
+                    appVo.setFirstCategory(category.getCategoryName());
+                }
+                if(category.getCategoryCode().equals(Constant.LEVEL2_CATEGORY)){
+                    appVo.setSecondCategory(category.getCategoryName());
+                }
+                if(category.getCategoryCode().equals(Constant.LEVEL3_CATEGORY)){
+                    appVo.setThirdCategory(category.getCategoryName());
+                }
+            }
+            // 状态信息
+            List<Status> statuses = statusMapper.listByAppId(app.getAppId());
+            for(Status status : statuses){
+                if(status.getTypeCode().equals(Constant.APP_STATUS)){
+                    appVo.setAppStatus(status.getStatusName());
+                }
+                if(status.getTypeCode().equals(Constant.APP_PLATFORM)){
+                    appVo.setAppPlatform(status.getStatusName());
+                }
+                if(status.getTypeCode().equals(Constant.PUBLISH_STATUS)){
+                    appVo.setPublishStatus(status.getStatusName());
+                }
+            }
+            appVos.add(appVo);
+        }
+        // 根据搜索条件过滤
+        if(appSearchVo != null){
+            if(StringUtils.isNotBlank(appSearchVo.getAppName())){
+                appVos.removeIf(appVo -> !appVo.getAppName().toLowerCase().contains(appSearchVo.getAppName().toLowerCase()));
+            }
+            if(StringUtils.isNotBlank(appSearchVo.getAppStatus())){
+                appVos.removeIf(appVo -> !appVo.getAppStatus().equals(appSearchVo.getAppStatus()));
+            }
+            if(StringUtils.isNotBlank(appSearchVo.getAppPlatform())){
+                appVos.removeIf(appVo -> !appVo.getAppPlatform().equals(appSearchVo.getAppPlatform()));
+            }
+            if(StringUtils.isNotBlank(appSearchVo.getFirstCategory())){
+                appVos.removeIf(appVo -> !appVo.getFirstCategory().equals(appSearchVo.getFirstCategory()));
+            }
+            if(StringUtils.isNotBlank(appSearchVo.getSecondCategory())){
+                appVos.removeIf(appVo -> !appVo.getSecondCategory().equals(appSearchVo.getSecondCategory()));
+            }
+            if(StringUtils.isNotBlank(appSearchVo.getThirdCategory())){
+                appVos.removeIf(appVo -> !appVo.getThirdCategory().equals(appSearchVo.getThirdCategory()));
+            }
+        }
+        pageInfo.setList(appVos);
+        return pageInfo;
+    }
+
+    @Override
     public PageInfo<AppVo> listUncheckedApp(int pageNum, int pageSize, final AppSearchVo appSearchVo) {
         PageHelper.startPage(pageNum, pageSize);
         // 待审核App列表
