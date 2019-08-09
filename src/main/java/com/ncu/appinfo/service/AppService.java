@@ -1,6 +1,7 @@
 package com.ncu.appinfo.service;
 
 import com.github.pagehelper.PageInfo;
+import com.ncu.appinfo.vo.AppDetailVo;
 import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.AppVo;
 
@@ -19,4 +20,8 @@ public interface AppService {
     List<String> listStatus(String typeCode);
 
     List<String> listCategory(String categoryCode);
+
+    AppDetailVo getAppDetail(Long appId);
+
+    int checkedApp(Long appId);
 }

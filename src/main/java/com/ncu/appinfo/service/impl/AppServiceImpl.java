@@ -2,22 +2,23 @@ package com.ncu.appinfo.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ncu.appinfo.dao.AppMapper;
-import com.ncu.appinfo.dao.CategoryMapper;
-import com.ncu.appinfo.dao.StatusMapper;
-import com.ncu.appinfo.dao.VersionMapper;
+import com.ncu.appinfo.dao.*;
 import com.ncu.appinfo.entity.App;
 import com.ncu.appinfo.entity.Category;
 import com.ncu.appinfo.entity.Status;
 import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AppService;
+import com.ncu.appinfo.vo.AppDetailVo;
 import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.AppVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * AppServiceImpl
@@ -31,13 +32,15 @@ public class AppServiceImpl implements AppService {
     private final VersionMapper versionMapper;
     private final CategoryMapper categoryMapper;
     private final StatusMapper statusMapper;
+    private final DevUserMapper devUserMapper;
 
     @Autowired
-    public AppServiceImpl(AppMapper appMapper, VersionMapper versionMapper, CategoryMapper categoryMapper, StatusMapper statusMapper) {
+    public AppServiceImpl(AppMapper appMapper, VersionMapper versionMapper, CategoryMapper categoryMapper, StatusMapper statusMapper, DevUserMapper devUserMapper) {
         this.appMapper = appMapper;
         this.versionMapper = versionMapper;
         this.categoryMapper = categoryMapper;
         this.statusMapper = statusMapper;
+        this.devUserMapper = devUserMapper;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class AppServiceImpl implements AppService {
             appVo.setAppName(app.getAppName());
             appVo.setAppSize(app.getAppSize());
             // 版本信息
-            appVo.setVersion(versionMapper.selectByAppId(app.getAppId()));
+            appVo.setVersion(versionMapper.selectNewestByAppId(app.getAppId()));
             // 分类信息
             List<Category> categories = categoryMapper.listByAppId(app.getAppId());
             for(Category category : categories){
@@ -118,5 +121,50 @@ public class AppServiceImpl implements AppService {
     @Override
     public List<String> listCategory(String categoryCode) {
         return categoryMapper.listNameByCode(categoryCode);
+    }
+
+    @Override
+    public AppDetailVo getAppDetail(Long appId) {
+        AppDetailVo appDetailVo = new AppDetailVo();
+        appDetailVo.setApp(appMapper.selectByPrimaryKey(appId));
+
+        List<Category> categories = categoryMapper.listByAppId(appId);
+        Map<String, Category> categoryMap = new HashMap<>();
+        for(Category category : categories){
+            if(category.getCategoryCode().equals(Constant.LEVEL1_CATEGORY)){
+                categoryMap.put(Constant.LEVEL1_CATEGORY, category);
+            }
+            if(category.getCategoryCode().equals(Constant.LEVEL2_CATEGORY)){
+                categoryMap.put(Constant.LEVEL2_CATEGORY, category);
+            }
+            if(category.getCategoryCode().equals(Constant.LEVEL3_CATEGORY)){
+                categoryMap.put(Constant.LEVEL3_CATEGORY, category);
+            }
+        }
+        appDetailVo.setCategoryMap(categoryMap);
+
+        List<Status> statuses = statusMapper.listByAppId(appId);
+        Map<String, Status> statusMap = new HashMap<>();
+        for(Status status : statuses){
+            if(status.getTypeCode().equals(Constant.APP_STATUS)){
+                statusMap.put(Constant.APP_STATUS, status);
+            }
+            if(status.getTypeCode().equals(Constant.APP_PLATFORM)){
+                statusMap.put(Constant.APP_PLATFORM, status);
+            }
+            if(status.getTypeCode().equals(Constant.PUBLISH_STATUS)){
+                statusMap.put(Constant.PUBLISH_STATUS, status);
+            }
+        }
+        appDetailVo.setStatusMap(statusMap);
+
+        appDetailVo.setVersions(versionMapper.listByAppId(appId));
+        appDetailVo.setDevUsers(devUserMapper.listByAppId(appId));
+        return appDetailVo;
+    }
+
+    @Override
+    public int checkedApp(Long appId) {
+        return statusMapper.updateAppStatus(Constant.AppStatus.CHECKED_SUCCESS.getValue(), appId);
     }
 }

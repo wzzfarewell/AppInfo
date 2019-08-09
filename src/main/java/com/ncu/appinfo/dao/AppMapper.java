@@ -23,4 +23,5 @@ public interface AppMapper {
      * @return 按照app_id升序排列的APP列表
      */
     List<App> listByStatus(String statusName);
+
 }

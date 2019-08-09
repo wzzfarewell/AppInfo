@@ -2,6 +2,8 @@ package com.ncu.appinfo.dao;
 
 import com.ncu.appinfo.entity.Version;
 
+import java.util.List;
+
 public interface VersionMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -15,5 +17,7 @@ public interface VersionMapper {
 
     int updateByPrimaryKey(Version record);
 
-    Version selectByAppId(Long appId);
+    Version selectNewestByAppId(Long appId);
+
+    List<Version> listByAppId(Long appId);
 }

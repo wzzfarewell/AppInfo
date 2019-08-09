@@ -135,4 +135,10 @@
     where dev_name = #{name} and dev_password = #{password}
   </select>
 
+
+  <select id="listByAppId" resultMap="BaseResultMap">
+    select d.*
+    from app_dev ad join dev_user d on ad.dev_id = d.id
+    where ad.app_id = #{appId}
+  </select>
 </mapper>
