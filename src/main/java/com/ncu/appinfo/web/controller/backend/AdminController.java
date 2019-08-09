@@ -1,9 +1,12 @@
 package com.ncu.appinfo.web.controller.backend;
 
+import com.github.pagehelper.PageInfo;
 import com.ncu.appinfo.entity.BackendUser;
+import com.ncu.appinfo.entity.DevUser;
 import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AdminService;
 import com.ncu.appinfo.service.AppService;
+import com.ncu.appinfo.service.DevUserService;
 import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.UserVo;
 import org.slf4j.Logger;
@@ -37,17 +40,21 @@ public class AdminController {
 
     private final AdminService adminService;
     private final AppService appService;
+    private final DevUserService devUserService;
 
     @Autowired
-    public AdminController(AdminService adminService, AppService appService) {
+    public AdminController(AdminService adminService, AppService appService, DevUserService devUserService) {
         this.adminService = adminService;
         this.appService = appService;
+        this.devUserService = devUserService;
     }
 
     @GetMapping("/home")
     public String index(){
         return "admin/index";
     }
+
+    // =====================================管理员登录=================================
 
     @GetMapping("/login")
     public String toLogin(Map<String, Object> map){
@@ -86,6 +93,8 @@ public class AdminController {
         }
         return "redirect:login";
     }
+
+    // =====================================管理员审核APP=================================
 
     @ModelAttribute("appStatus")
     public List<String> listStatus(){
@@ -152,6 +161,33 @@ public class AdminController {
         model.addAttribute("appSearchVo", searchVo);
         model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, searchVo));
         return "admin/app-manage";
+    }
+
+    // =====================================管理员管理开发者=================================
+
+    @PostMapping("/dev-user")
+    @ResponseBody
+    public PageInfo<DevUser> listDevUser(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                         @RequestParam(value = "pageSize", defaultValue = "1") int pageSize,
+                                         String devName){
+        return devUserService.listDevUser(pageNum, pageSize, devName);
+    }
+
+    @GetMapping("/dev/{id}")
+    public String devInfo(@PathVariable Long id, Model model){
+        model.addAttribute("devUser", devUserService.getByDevId(id));
+        return "admin/dev-info";
+    }
+
+    @GetMapping("/dev-delete/{id}")
+    public String deleteDevUser(@PathVariable Long id, Model model, HttpServletRequest request){
+        int resultCount = devUserService.deleteDevById(id);
+        if(resultCount > 0){
+            model.addAttribute("message", "操作成功！");
+        }else{
+            model.addAttribute("message", "操作失败！");
+        }
+        return "forward:" + request.getContextPath() + "/admin/home";
     }
 
 }

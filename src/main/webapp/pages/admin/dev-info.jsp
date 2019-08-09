@@ -1,12 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: wzzap
-  Date: 2019/8/6
-  Time: 16:08
+  Date: 2019/8/7
+  Time: 9:50
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +17,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>APP信息管理平台后台</title>
+    <title>开发者信息</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -24,13 +27,15 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="../../images/favicon.png" />
 </head>
+
 <body>
 <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo.svg" alt="logo"/></a>
-            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo-mini.svg" alt="logo"/></a>
+            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo.svg" alt="logo" /></a>
+            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo-mini.svg"
+                                                                           alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field d-none d-md-block">
@@ -45,7 +50,8 @@
             </div>
             <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
+                       aria-expanded="false">
                         <div class="nav-profile-img">
                             <img src="../../images/faces/face1.jpg" alt="image">
                             <span class="availability-status online"></span>
@@ -56,7 +62,7 @@
                     </a>
                     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/logout">
+                        <a class="dropdown-item" href="#">
                             <i class="mdi mdi-logout mr-2 text-primary"></i>
                             登出
                         </a>
@@ -73,7 +79,8 @@
                     </a>
                 </li>
             </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+                    data-toggle="offcanvas">
                 <span class="mdi mdi-menu"></span>
             </button>
         </div>
@@ -87,7 +94,8 @@
                     <a href="#" class="nav-link">
                         <div class="nav-profile-image">
                             <img src="../../images/faces/face1.jpg" alt="profile">
-                            <span class="login-status online"></span> <!--change to offline or busy as needed-->
+                            <span class="login-status online"></span>
+                            <!--change to offline or busy as needed-->
                         </div>
                         <div class="nav-profile-text d-flex flex-column">
                             <span class="font-weight-bold mb-2">小王</span>
@@ -124,7 +132,7 @@
               <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-home"></i>
               </span>
-                        APP 开发者
+                        开发者信息
                     </h3>
                     <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
@@ -135,49 +143,61 @@
                         </ul>
                     </nav>
                 </div>
-
                 <div class="row">
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <form class="d-flex align-items-center h-100" method="post">
-                                    <div class="input-group">
-                                        <input type="text" name="devName" class="form-control" placeholder="查找开发者">
-                                        <div class="input-group-prepend bg-transparent">
-                                            <button type="button" id="search-user-btn" class="btn-gradient-primary btn-md mdi mdi-magnify"></button>
+                                <h4 class="card-title">APP详情</h4>
+                                <p class="card-description">
+                                    您可以通过查看开发者的注册信息来决定是否删除此开发者
+                                </p>
+                                <form class="forms-sample" method="GET" action="${pageContext.request.contextPath}/admin/dev-delete/${devUser.id}">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">开发者id</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" value="${devUser.id}" class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">开发者编号</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" value="${devUser.devCode}"  class="form-control" readonly placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">开发者用户名</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" value="${devUser.devName}"  class="form-control" readonly placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">开发者邮箱</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" value="${devUser.devEmail}"  class="form-control" readonly placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">开发者注册时间</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" value="<fmt:formatDate value='${devUser.createTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">开发者简介</label>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="5" readonly>
+                                                ${devUser.devInfo}
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">删除</button>
+                                    <a href="${pageContext.request.contextPath}/admin/home" class="btn btn-light">返回</a>
                                 </form>
-                                <br>
-                                <br>
-                                <h4 class="card-title">开发者列表</h4>
-                                <div class="text-muted text-danger">${message}</div>
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <thead>
-                                        <tr class="text-primary">
-                                            <th>姓名</th>
-                                            <th>邮箱</th>
-                                            <th>信息</th>
-                                            <th>操作</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="loadUsers">
-                                        </tbody>
-                                        <tfoot>
-                                        <tr>
-                                            <td id="loadNav">
-                                                <button id="prePage" style="display: none;" type="button" class="btn btn-link">上一页</button>
-                                                <button id="nextPage" style="display: none;" type="button" class="btn btn-link">下一页</button>
-                                            </td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
             <!-- content-wrapper ends -->
             <!-- partial:partials/_footer.html -->
@@ -197,70 +217,6 @@
 <!-- container-scroller -->
 
 <!-- plugins:js -->
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-<script>
-    var curPage = 0;
-    var totalPage = 0;
-    $(function () {
-        load_users('', 1);
-        $("#search-user-btn").click(function () {
-            var devName = $("input[name='devName']").val();
-            load_users(devName, 1);
-        });
-        $("#prePage").click(function () {
-            var devName = $("input[name='devName']").val();
-            load_users(devName, curPage - 1);
-        });
-        $("#nextPage").click(function () {
-            var devName = $("input[name='devName']").val();
-            load_users(devName, curPage + 1);
-        });
-    });
-    function load_users(devName, pageNum) {
-        $("#loadUsers").empty();
-        var load_url = "<%=request.getContextPath()%>" + "/admin/dev-user"
-        $.ajax({
-            type: 'POST',
-            data: {'devName' : devName,
-                'pageNum' : pageNum
-            },
-            // contentType: 'application/json',
-            dataType: 'json',
-            url: load_url,
-            success: function(json){
-                curPage = json.pageNum;
-                totalPage = json.pages;
-                if(json.list != null){
-                    $.each(json.list, function (idx, user) {
-                        $("#loadUsers").append("<tr>" +
-                            "<td>" + user.devName + "</td>" +
-                            "<td>" + user.devEmail + "</td>" +
-                            "<td>" + user.devInfo + "</td>" +
-                            "<td><a href=\"${pageContext.request.contextPath}/admin/dev/" + user.id + "\"><i class=\"mdi mdi-pencil-box icon-md\"></i></a></td>" +
-                            "</tr>")
-                    });
-                    if(!json.isFirstPage){
-                        $("#prePage").show();
-                    }else{
-                        $("#prePage").hide();
-                    }
-                    if(!json.isLastPage){
-                        $("#nextPage").show();
-                    }else{
-                        $("#nextPage").hide();
-                    }
-                }else{
-                }
-            },
-            error: function(xmlHttpRequest, textStatus, errorThrown){
-                console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
-                console.log("错误类型textStatus: "+textStatus);
-                console.log("异常对象errorThrown: "+errorThrown);
-            }
-        });
-    }
-</script>
-
 <script src="../../vendors/js/vendor.bundle.base.js"></script>
 <script src="../../vendors/js/vendor.bundle.addons.js"></script>
 <!-- endinject -->
@@ -276,5 +232,3 @@
 </body>
 
 </html>
-
-

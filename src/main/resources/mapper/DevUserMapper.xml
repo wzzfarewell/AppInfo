@@ -141,4 +141,15 @@
     from app_dev ad join dev_user d on ad.dev_id = d.id
     where ad.app_id = #{appId}
   </select>
+  <select id="listAll" resultMap="BaseResultMap">
+    select d.*
+    from dev_user d
+    order by d.id asc
+  </select>
+  <select id="listByName" resultMap="BaseResultMap">
+    select d.*
+    from dev_user d
+    where d.dev_name like #{name}
+    order by d.id asc
+  </select>
 </mapper>

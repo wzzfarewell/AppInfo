@@ -41,18 +41,24 @@
                         <h6 class="font-weight-light">请登录后继续操作</h6>
                         <form:form class="pt-3" action="${pageContext.request.contextPath}/admin/login" modelAttribute="userVo" method="post">
                             <div class="form-group">
-                                <form:input type="text" path="username" class="form-control form-control-lg" placeholder="用户名"/>
+                                <form:input type="text" name="username" path="username" class="form-control form-control-lg" placeholder="用户名"/>
                             </div>
+                            <ul class="list-star" id="usernameVal" style="display: none;">
+                                <li class="text-muted">用户名输入不合法,必须是2-16个字符</li>
+                            </ul>
                             <div class="form-group">
-                                <form:input type="password" path="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="密码"/>
+                                <form:input type="password" name="password" path="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="密码"/>
                             </div>
+                            <ul class="list-star" id="passwordVal" style="display: none;">
+                                <li class="text-muted">密码输入不合法</li>
+                            </ul>
                             <ul class="list-star">
                                 <c:forEach items="${messages}" var="msg">
                                     <li class="text-muted">${msg}</li>
                                 </c:forEach>
                             </ul>
                             <div class="mt-3">
-                                <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">登录</button>
+                                <button type="submit" id="subBtn" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">登录</button>
                             </div>
                             <div class="my-2 d-flex justify-content-between align-items-center">
                                 <div class="form-check">
@@ -77,6 +83,47 @@
 </div>
 <!-- container-scroller -->
 <!-- plugins:js -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script>
+    $(function(){
+        $("#subBtn").click(function(){
+            return validateForm();
+        });
+    });
+    // 登录表单验证
+    function validateForm(){
+        var username = $("input[name='username']").val();
+        var password = $("input[name='password']").val();
+        if(username == ""){
+            alert("用户名为空，请输入用户名!")
+            return false;
+        }
+        if(password == ""){
+            alert("密码为空，请输入密码!")
+            return false;
+        }
+        var uPattern =  /^[\u4e00-\u9fff\w]{2,16}$/;
+        var test1 = uPattern.test(username);
+        var pPattern = /^[\w_-]{6,16}$/;
+        var test2 = pPattern.test(password);
+        if(!test1){
+            $("#usernameVal").show();
+        }else{
+            $("#usernameVal").hide();
+        }
+        if(!test2){
+            $("#passwordVal").show();
+        }else{
+            $("#passwordVal").hide();
+        }
+        if(test1 && test2){
+            return true;
+        }else{
+            return false;
+        }
+    }
+</script>
+
 <script src="../../vendors/js/vendor.bundle.base.js"></script>
 <script src="../../vendors/js/vendor.bundle.addons.js"></script>
 <!-- endinject -->
