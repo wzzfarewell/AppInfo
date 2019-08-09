@@ -140,87 +140,38 @@
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
+                                <form class="d-flex align-items-center h-100" method="post">
+                                    <div class="input-group">
+                                        <input type="text" name="devName" class="form-control" placeholder="查找开发者">
+                                        <div class="input-group-prepend bg-transparent">
+                                            <button type="button" id="search-user-btn" class="btn-gradient-primary btn-md mdi mdi-magnify"></button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <br>
+                                <br>
                                 <h4 class="card-title">开发者列表</h4>
+                                <div class="text-muted text-danger">${message}</div>
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
-                                        <tr>
+                                        <tr class="text-primary">
                                             <th>姓名</th>
                                             <th>邮箱</th>
                                             <th>信息</th>
-                                            <th>删除</th>
+                                            <th>操作</th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <img src="../../images/faces/face1.jpg" class="mr-2" alt="image">
-                                                David Grey
-                                            </td>
-                                            <td>
-                                                Fund is not recieved
-                                            </td>
-                                            <td>
-                                                <label class="badge badge-gradient-success">DONE</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-gradient-primary btn-rounded btn-icon btn-sm">
-                                                    <i class="mdi mdi-content-cut menu-icon"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="../../images/faces/face2.jpg" class="mr-2" alt="image">
-                                                Stella Johnson
-                                            </td>
-                                            <td>
-                                                High loading time
-                                            </td>
-                                            <td>
-                                                <label class="badge badge-gradient-warning">PROGRESS</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-gradient-primary btn-rounded btn-icon btn-sm">
-                                                    <i class="mdi mdi-content-cut menu-icon"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="../../images/faces/face3.jpg" class="mr-2" alt="image">
-                                                Marina Michel
-                                            </td>
-                                            <td>
-                                                Website down for one week
-                                            </td>
-                                            <td>
-                                                <label class="badge badge-gradient-info">ON HOLD</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-gradient-primary btn-rounded btn-icon btn-sm">
-                                                    <i class="mdi mdi-content-cut menu-icon"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="../../images/faces/face4.jpg" class="mr-2" alt="image">
-                                                John Doe
-                                            </td>
-                                            <td>
-                                                Loosing control on server
-                                            </td>
-                                            <td>
-                                                <label class="badge badge-gradient-danger">REJECTED</label>
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-gradient-primary btn-rounded btn-icon btn-sm">
-                                                    <i class="mdi mdi-content-cut menu-icon"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                        <tbody id="loadUsers">
                                         </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <td id="loadNav">
+                                                <button id="prePage" style="display: none;" type="button" class="btn btn-link">上一页</button>
+                                                <button id="nextPage" style="display: none;" type="button" class="btn btn-link">下一页</button>
+                                            </td>
+                                        </tr>
+                                        </tfoot>
                                     </table>
                                 </div>
                             </div>
@@ -246,6 +197,70 @@
 <!-- container-scroller -->
 
 <!-- plugins:js -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script>
+    var curPage = 0;
+    var totalPage = 0;
+    $(function () {
+        load_users('', 1);
+        $("#search-user-btn").click(function () {
+            var devName = $("input[name='devName']").val();
+            load_users(devName, 1);
+        });
+        $("#prePage").click(function () {
+            var devName = $("input[name='devName']").val();
+            load_users(devName, curPage - 1);
+        });
+        $("#nextPage").click(function () {
+            var devName = $("input[name='devName']").val();
+            load_users(devName, curPage + 1);
+        });
+    });
+    function load_users(devName, pageNum) {
+        $("#loadUsers").empty();
+        var load_url = "<%=request.getContextPath()%>" + "/admin/dev-user"
+        $.ajax({
+            type: 'POST',
+            data: {'devName' : devName,
+                'pageNum' : pageNum
+            },
+            // contentType: 'application/json',
+            dataType: 'json',
+            url: load_url,
+            success: function(json){
+                curPage = json.pageNum;
+                totalPage = json.pages;
+                if(json.list != null){
+                    $.each(json.list, function (idx, user) {
+                        $("#loadUsers").append("<tr>" +
+                            "<td>" + user.devName + "</td>" +
+                            "<td>" + user.devEmail + "</td>" +
+                            "<td>" + user.devInfo + "</td>" +
+                            "<td><a href=\"${pageContext.request.contextPath}/admin/dev/" + user.id + "\"><i class=\"mdi mdi-pencil-box icon-md\"></i></a></td>" +
+                            "</tr>")
+                    });
+                    if(!json.isFirstPage){
+                        $("#prePage").show();
+                    }else{
+                        $("#prePage").hide();
+                    }
+                    if(!json.isLastPage){
+                        $("#nextPage").show();
+                    }else{
+                        $("#nextPage").hide();
+                    }
+                }else{
+                }
+            },
+            error: function(xmlHttpRequest, textStatus, errorThrown){
+                console.log("请求对象XMLHttpRequest: "+XMLHttpRequest);
+                console.log("错误类型textStatus: "+textStatus);
+                console.log("异常对象errorThrown: "+errorThrown);
+            }
+        });
+    }
+</script>
+
 <script src="../../vendors/js/vendor.bundle.base.js"></script>
 <script src="../../vendors/js/vendor.bundle.addons.js"></script>
 <!-- endinject -->

@@ -17,7 +17,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>APP审核</title>
+    <title>开发者信息</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -110,7 +110,7 @@
                         <i class="mdi mdi-account-multiple menu-icon"></i>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                         <span class="menu-title">APP应用管理</span>
                         <i class="menu-arrow"></i>
@@ -132,7 +132,7 @@
               <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-home"></i>
               </span>
-                        APP 信息审核
+                        开发者信息
                     </h3>
                     <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
@@ -149,93 +149,49 @@
                             <div class="card-body">
                                 <h4 class="card-title">APP详情</h4>
                                 <p class="card-description">
-                                    您可以通过查看APP的这些内容来决定是否通过审核
+                                    您可以通过查看开发者的注册信息来决定是否删除此开发者
                                 </p>
-                                <form class="forms-sample" method="GET" action="${pageContext.request.contextPath}/admin/app-check/${appDetail.app.appId}">
+                                <form class="forms-sample" method="GET" action="${pageContext.request.contextPath}/admin/dev-delete/${devUser.id}">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">软件名称</label>
+                                        <label class="col-sm-2 col-form-label">开发者id</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.appName}" class="form-control" readonly placeholder="">
+                                            <input type="text" value="${devUser.id}" class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">APK名称</label>
+                                        <label class="col-sm-2 col-form-label">开发者编号</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.apkName}"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="${devUser.devCode}"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">支持的Rom</label>
+                                        <label class="col-sm-2 col-form-label">开发者用户名</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.supportRom}"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="${devUser.devName}"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">语言</label>
+                                        <label class="col-sm-2 col-form-label">开发者邮箱</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.language}"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="${devUser.devEmail}"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">软件大小</label>
+                                        <label class="col-sm-2 col-form-label">开发者注册时间</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.app.appSize}"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="<fmt:formatDate value='${devUser.createTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">创建时间</label>
+                                        <label class="col-sm-2 col-form-label">开发者简介</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="<fmt:formatDate value='${appDetail.app.createTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
+                                            <textarea class="form-control" rows="5" readonly>
+                                                ${devUser.devInfo}
+                                            </textarea>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">更新时间</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" value="<fmt:formatDate value='${appDetail.app.updateTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">分类</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.categoryMap.get("一级分类").categoryName}>>${appDetail.categoryMap.get("二级分类").categoryName}>>${appDetail.categoryMap.get("三级分类").categoryName}" class="form-control" readonly placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">所属平台</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" value="${appDetail.statusMap.get("AppPlatform").statusName}" class="form-control" readonly placeholder="">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">版本信息</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control">
-                                                <c:forEach var="version" items="${appDetail.versions}">
-                                                    <option>${version.versionNo}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control">
-                                                <c:forEach var="dev" items="${appDetail.devUsers}">
-                                                    <option>${dev.devName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">简介</label>
-                                        <div class="col-sm-10">
-                        <textarea class="form-control" rows="5" readonly>
-                            ${appDetail.app.appInfo}
-                        </textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-gradient-primary mr-2">通过审核</button>
-                                    <a href="${pageContext.request.contextPath}/admin/app-manage" class="btn btn-light">返回</a>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">删除</button>
+                                    <a href="${pageContext.request.contextPath}/admin/home" class="btn btn-light">返回</a>
                                 </form>
                             </div>
                         </div>

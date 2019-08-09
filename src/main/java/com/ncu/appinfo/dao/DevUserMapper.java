@@ -21,4 +21,8 @@ public interface DevUserMapper {
     List<DevUser> listByAppId(Long appId);
 
     DevUser selectByNameAndPwd(@Param("name") String name, @Param("password") String password);
+
+    List<DevUser> listAll();
+
+    List<DevUser> listByName(String name);
 }
