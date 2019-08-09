@@ -141,4 +141,13 @@ public class DevUserController {
         return "developer/app-list";
     }
 
+    @GetMapping("/appVersion")
+    public String addAppVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                                Model model){
+        Long id=2l;
+        model.addAttribute("page", appService.listAppVersion(pageNum, pageSize, id));
+        return "developer/appVersion";
+    }
+
 }

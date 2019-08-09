@@ -31,4 +31,6 @@ public interface AppMapper {
      */
     List<App> listByDevUser(Long dev_id);
 
+    App selectByVersionId(Long id);
+
 }

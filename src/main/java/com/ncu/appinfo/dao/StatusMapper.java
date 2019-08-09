@@ -29,4 +29,6 @@ public interface StatusMapper {
      * @return
      */
     int updateAppStatus(@Param("appStatus")String appStatus, @Param("appId") Long appId);
+
+    List<Status> listByVersionId(Long versionId);
 }

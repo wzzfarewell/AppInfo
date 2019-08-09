@@ -6,10 +6,12 @@ import com.ncu.appinfo.dao.*;
 import com.ncu.appinfo.entity.App;
 import com.ncu.appinfo.entity.Category;
 import com.ncu.appinfo.entity.Status;
+import com.ncu.appinfo.entity.Version;
 import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AppService;
 import com.ncu.appinfo.vo.AppDetailVo;
 import com.ncu.appinfo.vo.AppSearchVo;
+import com.ncu.appinfo.vo.AppVersionVo;
 import com.ncu.appinfo.vo.AppVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -235,5 +237,32 @@ public class AppServiceImpl implements AppService {
     @Override
     public int checkedApp(Long appId) {
         return statusMapper.updateAppStatus(Constant.AppStatus.CHECKED_SUCCESS.getValue(), appId);
+    }
+
+    @Override
+    public PageInfo<AppVersionVo> listAppVersion(int pageNum, int pageSize, Long id) {
+        PageHelper.startPage(pageNum, pageSize);
+
+        List<Version> versions =versionMapper.selectVersionsByAppId(id);
+        List<AppVersionVo> appVersionVos=new ArrayList<>();
+        PageInfo pageInfo = new PageInfo(versions);
+
+        for (Version version : versions){
+            AppVersionVo appVersionVo=new AppVersionVo();
+            appVersionVo.setAppName(appMapper.selectByVersionId(version.getId()).getAppName());
+            appVersionVo.setVersionNo(version.getVersionNo());
+            appVersionVo.setVersionSize(version.getVersionSize());
+            appVersionVo.setUpdateTime(version.getUpdateTime());
+            appVersionVo.setDownloadUrl(version.getDownloadUrl());
+            List<Status> statuses = statusMapper.listByVersionId(version.getId());
+            for(Status status : statuses) {
+                if(status.getTypeCode().equals(Constant.PUBLISH_STATUS)){
+                    appVersionVo.setStatusName(status.getStatusName());
+                }
+            }
+            appVersionVos.add(appVersionVo);
+        }
+        pageInfo.setList(appVersionVos);
+        return pageInfo;
     }
 }

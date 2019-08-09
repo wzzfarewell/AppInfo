@@ -166,4 +166,10 @@
     where av.app_id = #{appId}
     order by v.create_time desc
   </select>
+
+  <select id="selectVersionsByAppId" resultMap="BaseResultMap">
+    select v.*
+    from app_version av join version v on av.version_id = v.id
+    where av.app_id = #{id}
+  </select>
 </mapper>

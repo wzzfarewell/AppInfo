@@ -192,4 +192,11 @@
     where apps.dev_id = #{dev_id}
     order by a.app_id asc
   </select>
+
+  <select id="selectByVersionId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select app.*
+    from app
+    join app_version on app.app_id=app_version.app_id
+    where version_id=#{id}
+  </select>
 </mapper>
