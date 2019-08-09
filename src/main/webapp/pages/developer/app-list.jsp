@@ -271,7 +271,7 @@
                                             <td>${app.version.versionNo}</td>
                                             <td>
                                                 <div class="dropdown">
-                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                    <button type="button" class="btn btn-primary dropdown-toggle btn-sm" data-toggle="dropdown">
                                                         点击操作
                                                     </button>
                                                     <div class="dropdown-menu">
