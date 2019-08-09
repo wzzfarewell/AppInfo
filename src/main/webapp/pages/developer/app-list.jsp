@@ -145,7 +145,7 @@
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <form:form class="form-sample" action="${pageContext.request.contextPath}/admin/search-app" modelAttribute="appSearchVo" method="post">
+                                <form:form class="form-sample" action="${pageContext.request.contextPath}/developer/search-app" modelAttribute="appSearchVo" method="post">
                                     <p class="card-description">
                                         APP 查询
                                     </p>
@@ -298,10 +298,10 @@
                                     <tr>
                                         <th colspan="9">
                                             <c:if test="${!page.isFirstPage}">
-                                                <a href="${pageContext.request.contextPath}/developer/app-manage?pageNum=${page.pageNum - 1}" class="">上一页</a>
+                                                <a href="${pageContext.request.contextPath}/developer/app-list?pageNum=${page.pageNum - 1}" class="">上一页</a>
                                             </c:if>
                                             <c:if test="${!page.isLastPage}">
-                                                <a href="${pageContext.request.contextPath}/developer/app-manage?pageNum=${page.pageNum + 1}"  class="">下一页</a>
+                                                <a href="${pageContext.request.contextPath}/developer/app-list?pageNum=${page.pageNum + 1}"  class="">下一页</a>
                                             </c:if>
                                         </th>
                                     </tr>
