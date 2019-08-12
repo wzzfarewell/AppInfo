@@ -141,6 +141,15 @@ public class DevUserController {
         return "developer/app-list";
     }
 
+    /**
+     * 添加APP基础信息
+     * @return
+     */
+    @GetMapping("/app-add")
+    public String addApp(){
+        return "developer/app-add";
+    }
+
     @GetMapping("/appVersion")
     public String addAppVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                 @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
