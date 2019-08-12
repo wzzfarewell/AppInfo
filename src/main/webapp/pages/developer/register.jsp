@@ -57,7 +57,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label text-muted">
                                         <input type="checkbox" class="form-check-input">
-                                        我同意不会去看的不平等条约
+                                        我同意条约
                                     </label>
                                 </div>
                             </div>

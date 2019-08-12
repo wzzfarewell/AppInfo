@@ -275,7 +275,7 @@
                                                         点击操作
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="#">新增版本</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=1">新增版本</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="#">修改版本</a>
                                                         <div class="dropdown-divider"></div>

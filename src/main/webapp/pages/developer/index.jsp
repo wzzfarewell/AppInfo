@@ -124,7 +124,7 @@
               <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-home"></i>
               </span>
-                        APP 账户管理 <a href="${pageContext.request.contextPath}/developer/appVersion">APP版本信息</a>
+                        APP 账户管理
                     </h3>
                     <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
