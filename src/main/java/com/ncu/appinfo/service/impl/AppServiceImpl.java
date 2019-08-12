@@ -47,6 +47,11 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
+    public App selectByPrimaryKey(Long appId) {
+        return appMapper.selectByPrimaryKey(appId);
+    }
+
+    @Override
     public PageInfo<AppVo> listAppByDevUser(int pageNum, int pageSize, Long dev_id, final AppSearchVo appSearchVo) {
         PageHelper.startPage(pageNum, pageSize);
         List<App> apps = appMapper.listByDevUser(dev_id);
@@ -333,5 +338,10 @@ public class AppServiceImpl implements AppService {
         result+=devUserMapper.addAppDev(appId,appVo.getDevId());
 
         return result;
+    }
+
+    @Override
+    public int updateAppDetail(AppVo appVo) {
+        return 0;
     }
 }

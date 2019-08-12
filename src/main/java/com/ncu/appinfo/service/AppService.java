@@ -1,6 +1,7 @@
 package com.ncu.appinfo.service;
 
 import com.github.pagehelper.PageInfo;
+import com.ncu.appinfo.entity.App;
 import com.ncu.appinfo.vo.AppDetailVo;
 import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.AppVersionVo;
@@ -15,6 +16,8 @@ import java.util.List;
  * @date 2019/8/7
  **/
 public interface AppService {
+
+    App selectByPrimaryKey(Long appId);
 
     PageInfo<AppVo> listUncheckedApp(int pageNum, int pageSize, AppSearchVo appSearchVo);
 
@@ -35,4 +38,6 @@ public interface AppService {
     int updateAppVersion(AppVersionVo appVersionVo);
 
     int addAppDetail(AppVo appVo);
+
+    int updateAppDetail(AppVo appVo);
 }
