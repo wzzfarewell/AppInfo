@@ -20,4 +20,6 @@ public interface VersionMapper {
     Version selectNewestByAppId(Long appId);
 
     List<Version> listByAppId(Long appId);
+
+    List<Version> selectVersionsByAppId(Long id);
 }

@@ -185,4 +185,18 @@
     where s.status_name = #{statusName}
     order by a.app_id asc
   </select>
+
+  <select id="listByDevUser" resultMap="BaseResultMap">
+    select a.*
+    from app a join app_dev apps on a.app_id = apps.app_id
+    where apps.dev_id = #{dev_id}
+    order by a.app_id asc
+  </select>
+
+  <select id="selectByVersionId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select app.*
+    from app
+    join app_version on app.app_id=app_version.app_id
+    where version_id=#{id}
+  </select>
 </mapper>

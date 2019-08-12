@@ -132,4 +132,10 @@
 		where apps.app_id = #{appId} and apps.status_id BETWEEN 1 and 5
   </update>
 
+  <select id="listByVersionId" resultMap="BaseResultMap">
+    SELECT s.*
+    FROM version_status JOIN STATUS s ON version_status.status_id = s.id
+    WHERE version_status.version_id = #{versionId}
+  </select>
+
 </mapper>

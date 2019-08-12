@@ -124,19 +124,30 @@ public class DevUserController {
     @GetMapping("/app-list")
     public String appManage(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
-                            Model model){
+                            HttpSession session,Model model){
+        DevUser devUser=(DevUser)session.getAttribute("current_user");
         model.addAttribute("appSearchVo", new AppSearchVo());
-        model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, null));
+        model.addAttribute("page", appService.listAppByDevUser(pageNum, pageSize, devUser.getId(),null));
         return "developer/app-list";
     }
 
     @PostMapping("/search-app")
     public String searchApp(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
-                            AppSearchVo appSearchVo, Model model){
+                            AppSearchVo appSearchVo, HttpSession session,Model model){
+        DevUser devUser=(DevUser)session.getAttribute("current_user");
         model.addAttribute("appSearchVo", appSearchVo);
-        model.addAttribute("page", appService.listUncheckedApp(pageNum, pageSize, appSearchVo));
+        model.addAttribute("page", appService.listAppByDevUser(pageNum, pageSize, devUser.getId(),appSearchVo));
         return "developer/app-list";
+    }
+
+    @GetMapping("/appVersion")
+    public String addAppVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                                Model model){
+        Long id=2l;
+        model.addAttribute("page", appService.listAppVersion(pageNum, pageSize, id));
+        return "developer/appVersion";
     }
 
 }
