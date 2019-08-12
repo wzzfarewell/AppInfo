@@ -104,7 +104,7 @@
                         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/home">
                         <span class="menu-title">APP开发者管理</span>
                         <i class="mdi mdi-account-multiple menu-icon"></i>

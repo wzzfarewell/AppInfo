@@ -62,4 +62,16 @@ public class AppSearchVo {
     public void setThirdCategory(String thirdCategory) {
         this.thirdCategory = thirdCategory;
     }
+
+    @Override
+    public String toString() {
+        return "AppSearchVo{" +
+                "appName='" + appName + '\'' +
+                ", appStatus='" + appStatus + '\'' +
+                ", appPlatform='" + appPlatform + '\'' +
+                ", firstCategory='" + firstCategory + '\'' +
+                ", secondCategory='" + secondCategory + '\'' +
+                ", thirdCategory='" + thirdCategory + '\'' +
+                '}';
+    }
 }
