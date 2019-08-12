@@ -31,4 +31,6 @@ public interface AppService {
     PageInfo<AppVersionVo> listAppVersion(int pageNum, int pageSize, Long id);
 
     int addAppVersion(AppVersionVo appVersionVo);
+
+    int addAppDetail(AppVo appVo);
 }

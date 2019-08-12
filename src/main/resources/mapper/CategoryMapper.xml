@@ -116,4 +116,19 @@
     from category
     where category_code = #{categoryCode}
   </select>
+
+  <select id="findIdByCategoryName" parameterType="java.lang.String" resultType="java.lang.Long">
+    select id
+    from category
+    where category_name = #{categoryName,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="addAppCategoryMapper" parameterType="java.lang.Long">
+    insert into app_category ( app_id,category_id
+      )
+    values (#{appId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}
+      )
+  </insert>
+
+
 </mapper>

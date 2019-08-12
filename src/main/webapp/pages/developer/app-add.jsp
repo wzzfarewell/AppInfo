@@ -62,35 +62,37 @@
                                 <p class="card-description">
                                     请您填写APP基础信息
                                 </p>
-                                <form class="forms-sample" method="GET" action="${pageContext.request.contextPath}/developer/app-add">
+                                <form:form class="forms-sample" modelAttribute="appVo" method="post" action="${pageContext.request.contextPath}/developer/app-add">
+                                    <form:hidden path="devId" value="${sessionScope.current_user.getId()}" />
+                                    <form:hidden path="appStatus" value="待审核" />
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">软件名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="appName" class="form-control" placeholder="">
+                                            <form:input type="text" path="appName" class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">APK名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="apkName"  class="form-control" placeholder="">
+                                            <form:input type="text" path="apkName"  class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">支持的Rom</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="supportRom"  class="form-control" placeholder="">
+                                            <form:input type="text" path="supportRom"  class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">界面语言</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="language"  class="form-control" placeholder="">
+                                            <form:input type="text" path="language"  class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">软件大小</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="appSize"  class="form-control" placeholder="">
+                                            <form:input type="text" path="appSize"  class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -146,18 +148,18 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">应用简介</label>
                                         <div class="col-sm-10">
-                                            <textarea class="form-control" rows="5"></textarea>
+                                            <form:textarea path="appInfo" class="form-control" rows="5"></form:textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">LOGO图片</label>
                                         <div class="col-sm-10">
-                                            <input type="file" id="logo" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
+                                            <input type="file" path="logo" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-gradient-primary mr-2">添加</button>
                                     <button type="reset" class="btn btn-gradient-primary mr-2">重置</button>
-                                </form>
+                                </form:form>
                             </div>
                         </div>
                     </div>

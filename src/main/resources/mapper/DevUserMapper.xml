@@ -152,4 +152,11 @@
     where d.dev_name like #{name}
     order by d.id asc
   </select>
+
+  <insert id="addAppDev" parameterType="java.lang.Long">
+    insert into app_dev ( app_id,dev_id
+      )
+    values (#{appId,jdbcType=BIGINT}, #{devId,jdbcType=BIGINT}
+      )
+  </insert>
 </mapper>

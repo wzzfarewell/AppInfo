@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -283,6 +284,31 @@ public class AppServiceImpl implements AppService {
 
         result+=appMapper.addAppVersion(appVersionVo.getAppId(),versionId);
         result+=statusMapper.addVersionStatus(versionId,statusId);
+
+        return result;
+    }
+
+    @Override
+    public int addAppDetail(AppVo appVo) {
+        int result=0;
+        App app = new App();
+        app.setAppName(appVo.getAppName());
+        app.setApkName(appVo.getApkName());
+        app.setSupportRom(appVo.getSupportRom());
+        app.setLanguage(appVo.getLanguage());
+        app.setAppSize(appVo.getAppSize());
+        app.setAppInfo(appVo.getAppInfo());
+        result=appMapper.insertSelective(app);
+
+        Long appId=app.getAppId();
+        result+=categoryMapper.addAppCategoryMapper(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()));
+        result+=categoryMapper.addAppCategoryMapper(appId,categoryMapper.findIdByCategoryName(appVo.getSecondCategory()));
+        result+=categoryMapper.addAppCategoryMapper(appId,categoryMapper.findIdByCategoryName(appVo.getThirdCategory()));
+
+        result+=statusMapper.addAppStatus(appId,statusMapper.findIdByStatusName(appVo.getAppPlatform()));
+        /*添加待审核状态*/
+        result+=statusMapper.addAppStatus(appId,new Long((long)1));
+        result+=devUserMapper.addAppDev(appId,appVo.getDevId());
 
         return result;
     }

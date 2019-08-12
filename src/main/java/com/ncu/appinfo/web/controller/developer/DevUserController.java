@@ -6,6 +6,7 @@ import com.ncu.appinfo.service.AppService;
 import com.ncu.appinfo.service.DevUserService;
 import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.AppVersionVo;
+import com.ncu.appinfo.vo.AppVo;
 import com.ncu.appinfo.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -142,13 +143,23 @@ public class DevUserController {
         return "developer/app-list";
     }
 
+    @GetMapping("/app-add")
+    public String toAddApp(Map<String, Object> map){
+        map.put("appVo", new AppVo());
+        return "developer/app-add";
+    }
     /**
      * 添加APP基础信息
      * @return
      */
-    @GetMapping("/app-add")
-    public String addApp(){
-        return "developer/app-add";
+    @PostMapping("/app-add")
+    public String addApp(@ModelAttribute("appVo")AppVo appVo,BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "developer/app-add";
+        }
+        int result=appService.addAppDetail(appVo);
+        System.out.println(result);
+        return "redirect:app-list";
     }
 
     @GetMapping("/appVersion")
