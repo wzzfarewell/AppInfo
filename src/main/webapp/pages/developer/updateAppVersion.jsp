@@ -15,7 +15,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>新增APP版本信息</title>
+    <title>修改APP版本信息</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -31,9 +31,7 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo.svg" alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo-mini.svg"
-                                                                                                              alt="logo" /></a>
+
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field d-none d-md-block">
@@ -60,7 +58,7 @@
                     </a>
                     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/admin/logout">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/logout">
                             <i class="mdi mdi-logout mr-2 text-primary"></i>
                             登出
                         </a>
@@ -186,6 +184,56 @@
                                     </tr>
                                     </tfoot>
                                 </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">修改APP版本信息</h4>
+
+                                <form:form class="forms-sample" method="post" modelAttribute="appVersionVo" action="${pageContext.request.contextPath}/developer/updateAppVersion" >
+                                    <form:hidden path="appId" value="${page.list[0].appId}" />
+                                    <form:hidden path="appName" value="${page.list[0].appName}" />
+                                    <form:hidden path="updateTime" value="" />
+                                    <form:hidden path="statusName" value="未发布" />
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">版本号</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="versionNo" type="text" class="form-control" placeholder="请输入版本号"/>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">版本大小</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="versionSize" type="text" class="form-control" placeholder="请输入版本大小,单位为Mb" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">版本简介</label>
+                                        <div class="col-sm-10">
+                                            <form:textarea path="versionInfo" class="form-control" rows="5" placeholder="请输入本版本的相关信息,本信息作为该版本的详细信息进行版本介绍" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">apk名称</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="apkFileName" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">apk文件</label>
+                                        <div class="col-sm-10">
+                                            <form:input path="downloadUrl" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">保存</button>
+                                    <a href="${pageContext.request.contextPath}/developer/app-list" class="btn btn-light">返回</a>
+                                </form:form>
                             </div>
                         </div>
                     </div>

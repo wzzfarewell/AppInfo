@@ -199,4 +199,12 @@
     join app_version on app.app_id=app_version.app_id
     where version_id=#{id}
   </select>
+
+  <insert id="addAppVersion" parameterType="java.lang.Long">
+    insert into app_version (app_id, version_id
+      )
+    values (#{appId,jdbcType=BIGINT}, #{versionId,jdbcType=BIGINT}
+      )
+  </insert>
+
 </mapper>

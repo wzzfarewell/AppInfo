@@ -1,6 +1,7 @@
 package com.ncu.appinfo.dao;
 
 import com.ncu.appinfo.entity.App;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -33,4 +34,5 @@ public interface AppMapper {
 
     App selectByVersionId(Long id);
 
+    int addAppVersion(@Param(value = "appId") Long appId,@Param(value = "versionId") Long versionId);
 }

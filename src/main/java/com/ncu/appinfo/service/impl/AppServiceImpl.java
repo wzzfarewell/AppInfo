@@ -249,6 +249,7 @@ public class AppServiceImpl implements AppService {
 
         for (Version version : versions){
             AppVersionVo appVersionVo=new AppVersionVo();
+            appVersionVo.setAppId(id);
             appVersionVo.setAppName(appMapper.selectByVersionId(version.getId()).getAppName());
             appVersionVo.setVersionNo(version.getVersionNo());
             appVersionVo.setVersionSize(version.getVersionSize());
@@ -264,5 +265,25 @@ public class AppServiceImpl implements AppService {
         }
         pageInfo.setList(appVersionVos);
         return pageInfo;
+    }
+
+    @Override
+    public int addAppVersion(AppVersionVo appVersionVo) {
+        int result=0;
+        Version version=new Version();
+        version.setVersionNo(appVersionVo.getVersionNo());
+        version.setVersionSize(appVersionVo.getVersionSize());
+        version.setVersionInfo(appVersionVo.getVersionInfo());
+        version.setApkFileName(appVersionVo.getApkFileName());
+        version.setDownloadUrl(appVersionVo.getDownloadUrl());
+
+        result=versionMapper.insert(version);
+        Long versionId=version.getId();
+        Long statusId=9l;
+
+        result+=appMapper.addAppVersion(appVersionVo.getAppId(),versionId);
+        result+=statusMapper.addVersionStatus(versionId,statusId);
+
+        return result;
     }
 }
