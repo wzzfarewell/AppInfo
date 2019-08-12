@@ -43,8 +43,8 @@
                 </a>
                 <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">
-                        <i class="mdi mdi-logout mr-2 text-primary" href="${pageContext.request.contextPath}/developer/logout"></i>
+                    <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/logout">
+                        <i class="mdi mdi-logout mr-2 text-primary"></i>
                         登出
                     </a>
                 </div>
