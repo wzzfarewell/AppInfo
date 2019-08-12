@@ -145,4 +145,11 @@
       )
   </insert>
 
+  <update id="updateVersionStatus" parameterType="java.lang.Long">
+    update version_status
+    set
+      status_id = #{statusId,jdbcType=BIGINT}
+    where version_id = #{versionId,jdbcType=BIGINT}
+  </update>
+
 </mapper>

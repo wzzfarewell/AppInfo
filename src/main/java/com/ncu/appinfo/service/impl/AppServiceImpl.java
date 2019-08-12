@@ -255,6 +255,9 @@ public class AppServiceImpl implements AppService {
             appVersionVo.setVersionSize(version.getVersionSize());
             appVersionVo.setUpdateTime(version.getUpdateTime());
             appVersionVo.setDownloadUrl(version.getDownloadUrl());
+            appVersionVo.setVersionInfo(version.getVersionInfo());
+            appVersionVo.setApkFileName(version.getApkFileName());
+            appVersionVo.setVersionId(version.getId());
             List<Status> statuses = statusMapper.listByVersionId(version.getId());
             for(Status status : statuses) {
                 if(status.getTypeCode().equals(Constant.PUBLISH_STATUS)){
@@ -283,6 +286,25 @@ public class AppServiceImpl implements AppService {
 
         result+=appMapper.addAppVersion(appVersionVo.getAppId(),versionId);
         result+=statusMapper.addVersionStatus(versionId,statusId);
+
+        return result;
+    }
+
+    @Override
+    public int updateAppVersion(AppVersionVo appVersionVo) {
+
+        int result=0;
+        Version version=new Version();
+
+        version.setVersionSize(appVersionVo.getVersionSize());
+        version.setVersionInfo(appVersionVo.getVersionInfo());
+        version.setApkFileName(appVersionVo.getApkFileName());
+        version.setDownloadUrl(appVersionVo.getDownloadUrl());
+        version.setId(appVersionVo.getVersionId());
+
+        Long statusId=9l;
+        result+= versionMapper.updateAppVersion(version);
+        result+= statusMapper.updateVersionStatus(version.getId(),statusId);
 
         return result;
     }

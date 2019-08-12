@@ -15,6 +15,16 @@ import java.util.Date;
 public class AppVersionVo {
     private Long appId;
 
+    private Long versionId;
+
+    public Long getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(Long versionId) {
+        this.versionId = versionId;
+    }
+
     @NotBlank(message = "软件名不能为空")
     private String appName;
 

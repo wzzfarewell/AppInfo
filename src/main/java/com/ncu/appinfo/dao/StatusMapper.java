@@ -33,4 +33,6 @@ public interface StatusMapper {
     List<Status> listByVersionId(Long versionId);
 
     int addVersionStatus(@Param(value = "versionId") Long versionId,@Param(value = "statusId") Long statusId);
+
+    int updateVersionStatus(@Param(value = "versionId") Long versionId,@Param(value = "statusId") Long statusId);
 }

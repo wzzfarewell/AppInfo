@@ -172,4 +172,16 @@
     from app_version av join version v on av.version_id = v.id
     where av.app_id = #{id}
   </select>
+
+  <update id="updateAppVersion" parameterType="com.ncu.appinfo.entity.Version" >
+    update version
+    set
+      version_info = #{versionInfo,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      version_size = #{versionSize,jdbcType=DECIMAL},
+      apk_file_name = #{apkFileName,jdbcType=VARCHAR},
+      create_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
 </mapper>

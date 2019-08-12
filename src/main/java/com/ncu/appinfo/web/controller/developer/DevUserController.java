@@ -1,9 +1,11 @@
 package com.ncu.appinfo.web.controller.developer;
 
 import com.ncu.appinfo.entity.DevUser;
+import com.ncu.appinfo.entity.Version;
 import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AppService;
 import com.ncu.appinfo.service.DevUserService;
+import com.ncu.appinfo.service.VersionService;
 import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.AppVersionVo;
 import com.ncu.appinfo.vo.UserVo;
@@ -17,6 +19,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -33,11 +36,13 @@ public class DevUserController {
     @Autowired
     private final DevUserService devUserService;
     private final AppService appService;
+    private final VersionService versionService;
 
     @Autowired
-    public DevUserController(DevUserService devUserService, AppService appService) {
+    public DevUserController(DevUserService devUserService, AppService appService, VersionService versionService) {
         this.devUserService = devUserService;
         this.appService = appService;
+        this.versionService=versionService;
     }
     @GetMapping("/home")
     public String index(){
@@ -147,7 +152,6 @@ public class DevUserController {
                                 @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
                                 @RequestParam(value = "appId") Long id,
                                 @RequestParam(value = "method") int method,
-                                HttpSession session,
                                 Model model){
         model.addAttribute("page", appService.listAppVersion(pageNum, pageSize, id));
         if (method==1){
@@ -176,9 +180,25 @@ public class DevUserController {
     }
 
     @GetMapping("/updateAppVersion")
-    public String toUpdateAppVersion(Map<String, Object> map){
+    public String toUpdateAppVersion(Map<String, Object> map, HttpServletRequest request){
         map.put("appVersionVo", new AppVersionVo());
         return "developer/updateAppVersion";
+    }
+
+    @PostMapping("/updateAppVersion")
+    public String updateAppVersion(@Valid AppVersionVo appVersionVo, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "developer/updateAppVersion";
+        }
+        int result=appService.updateAppVersion(appVersionVo);
+        System.out.println(result);
+        return "redirect:app-list";
+    }
+
+    @GetMapping("/selectVersion/{id}")
+    @ResponseBody
+    public Version selectVersion(@PathVariable("id") Long id){
+        return versionService.selectVersion(id);
     }
 
 }

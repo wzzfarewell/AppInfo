@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="../../css/style.css">
     <!-- endinject -->
     <link rel="shortcut icon" href="../../images/favicon.png" />
+
 </head>
 
 <body>
@@ -167,7 +168,7 @@
                                             <td>${obj.downloadUrl}</td>
                                             <td>${obj.updateTime}</td>
 
-                                            <td><i class="mdi mdi-pencil-box icon-md"></i></td>
+                                            <td><button onclick="onclick1('${obj.versionId}')" > <i class="mdi mdi-pencil-box icon-md"></i></button></td>  <!-- 点这个按钮把obj的值填到表格 -->
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -175,10 +176,10 @@
                                     <tr>
                                         <th colspan="9">
                                             <c:if test="${!page.isFirstPage}">
-                                                <a href="${pageContext.request.contextPath}/developer/appVersion?pageNum=${page.pageNum - 1}" class="">上一页</a>
+                                                <a href="${pageContext.request.contextPath}/developer/appVersion?appId=${page.list[0].appId}&method=2 & pageNum=${page.pageNum - 1}" class="">上一页</a>
                                             </c:if>
                                             <c:if test="${!page.isLastPage}">
-                                                <a href="${pageContext.request.contextPath}/developer/appVersion?pageNum=${page.pageNum + 1}"  class="">下一页</a>
+                                                <a href="${pageContext.request.contextPath}/developer/appVersion?appId=${page.list[0].appId}&method=2 & pageNum=${page.pageNum + 1}"  class="">下一页</a>
                                             </c:if>
                                         </th>
                                     </tr>
@@ -199,12 +200,13 @@
                                     <form:hidden path="appId" value="${page.list[0].appId}" />
                                     <form:hidden path="appName" value="${page.list[0].appName}" />
                                     <form:hidden path="updateTime" value="" />
+                                    <form:hidden path="versionId" value="" />
                                     <form:hidden path="statusName" value="未发布" />
 
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">版本号</label>
                                         <div class="col-sm-10">
-                                            <form:input path="versionNo" type="text" class="form-control" placeholder="请输入版本号"/>
+                                            <form:input path="versionNo" type="text" class="form-control" placeholder="请输入版本号" readonly="true"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -271,6 +273,26 @@
 <!-- Custom js for this page-->
 <script src="../../js/dashboard.js"></script>
 <!-- End custom js for this page-->
+<script src="../../js/jquery-1.12.4.js"></script>
+
+<script>
+    function onclick1(id){
+        $.getJSON("${pageContext.request.contextPath}/developer/selectVersion/"+id,function(data){
+            if (data["statusName"]== "已发布"){
+                alert("已发布版本不能修改!")
+            }else {
+                $("#versionNo").val(data["versionNo"]);
+                $("#versionSize").val(data["versionSize"]);
+                $("#versionInfo").val(data["versionInfo"]);
+                $("#apkFileName").val(data["apkFileName"]);
+                $("#downloadUrl").val(data["downloadUrl"]);
+                $("#versionId").val(data["id"]);
+            }
+        });
+    }
+
+</script>
+
 </body>
 
 </html>
