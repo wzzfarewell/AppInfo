@@ -43,7 +43,7 @@
       #{offSaleTime,jdbcType=TIMESTAMP}, now(), now()
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.App" >
+  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.App" keyProperty="appId" useGeneratedKeys="true">
     insert into app
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appId != null" >

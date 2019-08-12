@@ -152,4 +152,17 @@
     where version_id = #{versionId,jdbcType=BIGINT}
   </update>
 
+  <select id="findIdByStatusName" parameterType="java.lang.String" resultType="java.lang.Long">
+    select id
+    from status
+    where status_name = #{statusName}
+  </select>
+
+  <insert id="addAppStatus" parameterType="java.lang.Long">
+    insert into app_status ( app_id,status_id
+      )
+    values (#{appId,jdbcType=BIGINT}, #{statusId,jdbcType=BIGINT}
+      )
+  </insert>
+
 </mapper>

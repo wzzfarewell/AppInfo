@@ -9,6 +9,7 @@ package com.ncu.appinfo.global;
 public class Constant {
 
     public static final String CURRENT_USER = "current_user";
+    public static final String CHECK_CODE = "check_code";
 
     public static final String LEVEL1_CATEGORY = "一级分类";
     public static final String LEVEL2_CATEGORY = "二级分类";

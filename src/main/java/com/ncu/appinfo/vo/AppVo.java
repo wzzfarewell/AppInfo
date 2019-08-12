@@ -17,6 +17,8 @@ public class AppVo {
 
     private String apkName;
 
+    private String supportRom;
+
     private BigDecimal appSize;
 
     private String firstCategory;
@@ -32,6 +34,12 @@ public class AppVo {
     private String publishStatus;
 
     private Version version;
+
+    private String appInfo;
+
+    private String language;
+
+    private Long devId;
 
     public Long getAppId() {
         return appId;
@@ -55,6 +63,14 @@ public class AppVo {
 
     public void setApkName(String apkName) {
         this.apkName = apkName;
+    }
+
+    public String getSupportRom() {
+        return supportRom;
+    }
+
+    public void setSupportRom(String supportRom) {
+        this.supportRom = supportRom;
     }
 
     public BigDecimal getAppSize() {
@@ -119,6 +135,29 @@ public class AppVo {
 
     public void setVersion(Version version) {
         this.version = version;
+    }
+
+    public String getAppInfo() {
+        return appInfo;
+    }
+
+    public void setAppInfo(String appInfo) {
+        this.appInfo = appInfo;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public Long getDevId() {
+        return devId;
+    }
+    public void setDevId(Long devId) {
+        this.devId = devId;
     }
 
     @Override

@@ -33,4 +33,6 @@ public interface AppService {
     int addAppVersion(AppVersionVo appVersionVo);
 
     int updateAppVersion(AppVersionVo appVersionVo);
+
+    int addAppDetail(AppVo appVo);
 }

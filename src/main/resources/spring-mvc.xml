@@ -50,6 +50,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/admin/login"/>
+            <mvc:exclude-mapping path="/admin/authCode"/>
             <bean class="com.ncu.appinfo.web.interceptor.AdminLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
