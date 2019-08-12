@@ -138,4 +138,11 @@
     WHERE version_status.version_id = #{versionId}
   </select>
 
+  <insert id="addVersionStatus" parameterType="java.lang.Long">
+    insert into version_status ( version_id,status_id
+      )
+    values (#{versionId,jdbcType=BIGINT}, #{statusId,jdbcType=BIGINT}
+      )
+  </insert>
+
 </mapper>

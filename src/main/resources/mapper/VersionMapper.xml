@@ -29,15 +29,15 @@
     delete from version
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.ncu.appinfo.entity.Version" >
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.ncu.appinfo.entity.Version" >
     insert into version (id, version_no, version_info, 
       download_url, download_count, version_size, 
       apk_file_name, apk_loc_path, create_time, 
       update_time)
     values (#{id,jdbcType=BIGINT}, #{versionNo,jdbcType=VARCHAR}, #{versionInfo,jdbcType=VARCHAR}, 
       #{downloadUrl,jdbcType=VARCHAR}, #{downloadCount,jdbcType=BIGINT}, #{versionSize,jdbcType=DECIMAL}, 
-      #{apkFileName,jdbcType=VARCHAR}, #{apkLocPath,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{apkFileName,jdbcType=VARCHAR}, #{apkLocPath,jdbcType=VARCHAR}, now(),
+      now())
   </insert>
   <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.Version" >
     insert into version

@@ -1,5 +1,8 @@
 package com.ncu.appinfo.vo;
 
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,15 +15,46 @@ import java.util.Date;
 public class AppVersionVo {
     private Long appId;
 
+    @NotBlank(message = "软件名不能为空")
     private String appName;
 
+    @NotBlank(message = "版本号能为空")
     private String versionNo;
 
+    @NotNull(message = "版本大小不能为空")
     private BigDecimal versionSize;
 
     private String statusName;
 
     private String downloadUrl;
+
+    public String getApkFileName() {
+        return apkFileName;
+    }
+
+    public void setApkFileName(String apkFileName) {
+        this.apkFileName = apkFileName;
+    }
+
+    private String apkFileName;
+
+    private String versionInfo;
+
+    public Long getAppId() {
+        return appId;
+    }
+
+    public void setAppId(Long appId) {
+        this.appId = appId;
+    }
+
+    public String getVersionInfo() {
+        return versionInfo;
+    }
+
+    public void setVersionInfo(String versionInfo) {
+        this.versionInfo = versionInfo;
+    }
 
     private Date updateTime;
 
@@ -75,12 +109,15 @@ public class AppVersionVo {
     @Override
     public String toString() {
         return "AppVersionVo{" +
-                "appName='" + appName + '\'' +
-                ", versionNo='" + versionNo + '\'' +
-                ", versionSize=" + versionSize +
-                ", statusName='" + statusName + '\'' +
-                ", downloadUrl='" + downloadUrl + '\'' +
-                ", updateTime=" + updateTime +
+                "appId=" + appId +///////////////////////////////
+                ", appName='" + appName + '\'' +////////////////////////
+                ", versionNo='" + versionNo + '\'' +//////////////////////////
+                ", versionSize=" + versionSize +////////////////////////////////
+                ", statusName='" + statusName + '\'' +///////////////////////////
+                ", downloadUrl='" + downloadUrl + '\'' +///////////////////
+                ", apkFileName='" + apkFileName + '\'' +////////////////////
+                ", versionInfo='" + versionInfo + '\'' +/////////////////////////
+                ", updateTime=" + updateTime +///////////////////////
                 '}';
     }
 }

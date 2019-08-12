@@ -19,7 +19,7 @@ public class DevUser {
     @Size(max = 16, min = 6, message = "密码长度应为6-16个字符")
     private String devPassword;
 
-    @NotBlank(message = "密码不能为空")
+    @NotBlank(message = "邮箱不能为空")
     @Email(message = "请填写正确邮箱")
     private String devEmail;
 

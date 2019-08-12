@@ -1,15 +1,13 @@
 <%--
   Created by IntelliJ IDEA.
-  User: wzzap
-  Date: 2019/8/7
-  Time: 9:50
+  User: Sean
+  Date: 2019/8/9
+  Time: 9:01
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +15,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>开发者信息</title>
+    <title>新增APP版本信息</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -33,18 +31,16 @@
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo.svg" alt="logo" /></a>
-            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/admin/home"><img src="../../images/logo-mini.svg"
-                                                                           alt="logo" /></a>
+
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <div class="search-field d-none d-md-block">
-                <form class="d-flex align-items-center h-100" method="post" action="${pageContext.request.contextPath}/admin/name-search">
+                <form class="d-flex align-items-center h-100" action="#">
                     <div class="input-group">
                         <div class="input-group-prepend bg-transparent">
-                            <button type="submit" class="btn btn-sm mdi mdi-magnify"></button>
+                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
                         </div>
-                        <input type="text" name="appName" class="form-control bg-transparent border-0" placeholder="查找APP">
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="查找APP">
                     </div>
                 </form>
             </div>
@@ -62,7 +58,7 @@
                     </a>
                     <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/logout">
                             <i class="mdi mdi-logout mr-2 text-primary"></i>
                             登出
                         </a>
@@ -104,7 +100,7 @@
                         <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
                     </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/admin/home">
                         <span class="menu-title">APP开发者管理</span>
                         <i class="mdi mdi-account-multiple menu-icon"></i>
@@ -132,7 +128,7 @@
               <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-home"></i>
               </span>
-                        开发者信息
+                        APP 信息管理维护
                     </h3>
                     <nav aria-label="breadcrumb">
                         <ul class="breadcrumb">
@@ -143,56 +139,101 @@
                         </ul>
                     </nav>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-12 grid-margin stretch-card">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">历史版本列表</h4>
+                                <table id="appLoadTable" class="table table-bordered">
+                                    <thead>
+                                    <tr class="text-primary">
+                                        <th>软件名称</th>
+                                        <th>版本号</th>
+                                        <th>版本大小(单位:M)</th>
+                                        <th>发布状态</th>
+                                        <th>APK文件下载</th>
+                                        <th>最新更新时间</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <c:forEach items="${page.list}" var="obj">
+                                        <tr>
+                                            <td>${obj.appName}</td>
+                                            <td>${obj.versionNo}</td>
+                                            <td>${obj.versionSize}</td>
+                                            <td>${obj.statusName}</td>
+                                            <td>${obj.downloadUrl}</td>
+                                            <td>${obj.updateTime}</td>
+
+                                            <td><i class="mdi mdi-pencil-box icon-md"></i></td>
+                                        </tr>
+                                    </c:forEach>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th colspan="9">
+                                            <c:if test="${!page.isFirstPage}">
+                                                <a href="${pageContext.request.contextPath}/developer/appVersion?pageNum=${page.pageNum - 1}" class="">上一页</a>
+                                            </c:if>
+                                            <c:if test="${!page.isLastPage}">
+                                                <a href="${pageContext.request.contextPath}/developer/appVersion?pageNum=${page.pageNum + 1}"  class="">下一页</a>
+                                            </c:if>
+                                        </th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-12 grid-margin">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">APP详情</h4>
-                                <p class="card-description">
-                                    您可以通过查看开发者的注册信息来决定是否删除此开发者
-                                </p>
-                                <form class="forms-sample" method="GET" action="${pageContext.request.contextPath}/admin/dev-delete/${devUser.id}">
+                                <h4 class="card-title">增加APP版本信息</h4>
+
+                                <form:form class="forms-sample" method="post" modelAttribute="appVersionVo" action="${pageContext.request.contextPath}/developer/addAppVersion" >
+                                    <form:hidden path="appId" value="${page.list[0].appId}" />
+                                    <form:hidden path="appName" value="${page.list[0].appName}" />
+                                    <form:hidden path="updateTime" value="" />
+                                    <form:hidden path="statusName" value="未发布" />
+
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者id</label>
+                                        <label class="col-sm-2 col-form-label">版本号</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${devUser.id}" class="form-control" readonly placeholder="">
+                                            <form:input path="versionNo" type="text" class="form-control" placeholder="请输入版本号"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者编号</label>
+                                        <label class="col-sm-2 col-form-label">版本大小</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${devUser.devCode}"  class="form-control" readonly placeholder="">
+                                            <form:input path="versionSize" type="text" class="form-control" placeholder="请输入版本大小,单位为Mb" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者用户名</label>
+                                        <label class="col-sm-2 col-form-label">版本简介</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${devUser.devName}"  class="form-control" readonly placeholder="">
+                                            <form:textarea path="versionInfo" class="form-control" rows="5" placeholder="请输入本版本的相关信息,本信息作为该版本的详细信息进行版本介绍" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者邮箱</label>
+                                        <label class="col-sm-2 col-form-label">apk名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${devUser.devEmail}"  class="form-control" readonly placeholder="">
+                                            <form:input path="apkFileName" type="text" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者注册时间</label>
+                                        <label class="col-sm-2 col-form-label">apk文件</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="<fmt:formatDate value='${devUser.createTime}' pattern="yyyy-MM-dd HH:mm:ss"/>"  class="form-control" readonly placeholder="">
+                                            <form:input path="downloadUrl" type="text" class="form-control" />
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">开发者简介</label>
-                                        <div class="col-sm-10">
-                                            <textarea class="form-control" rows="5" readonly>
-                                                ${devUser.devInfo}
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-gradient-primary mr-2">删除</button>
-                                    <a href="${pageContext.request.contextPath}/admin/home" class="btn btn-light">返回</a>
-                                </form>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">保存</button>
+                                    <a href="${pageContext.request.contextPath}/developer/app-list" class="btn btn-light">返回</a>
+                                </form:form>
                             </div>
                         </div>
                     </div>
@@ -203,8 +244,9 @@
             <!-- partial:partials/_footer.html -->
             <footer class="footer">
                 <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2019 All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">farewell & made with <i
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a
+                    href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
+                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
                             class="mdi mdi-heart text-danger"></i></span>
                 </div>
             </footer>

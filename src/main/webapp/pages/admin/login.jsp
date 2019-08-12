@@ -60,15 +60,15 @@
                             <div class="mt-3">
                                 <button type="submit" id="subBtn" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">登录</button>
                             </div>
-                            <div class="my-2 d-flex justify-content-between align-items-center">
-                                <div class="form-check">
-                                    <label class="form-check-label text-muted">
-                                        <input type="checkbox" class="form-check-input">
-                                        记住密码
-                                    </label>
-                                </div>
-                                <a href="#" class="auth-link text-black">忘记密码？</a>
-                            </div>
+                            <%--<div class="my-2 d-flex justify-content-between align-items-center">--%>
+                                <%--<div class="form-check">--%>
+                                    <%--<label class="form-check-label text-muted">--%>
+                                        <%--<input type="checkbox" class="form-check-input">--%>
+                                        <%--记住密码--%>
+                                    <%--</label>--%>
+                                <%--</div>--%>
+                                <%--<a href="#" class="auth-link text-black">忘记密码？</a>--%>
+                            <%--</div>--%>
                             <!-- <div class="text-center mt-4 font-weight-light">
                               Don't have an account? <a href="register.html" class="text-primary">Create</a>
                             </div> -->

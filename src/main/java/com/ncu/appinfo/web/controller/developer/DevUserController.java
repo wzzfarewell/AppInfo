@@ -5,6 +5,7 @@ import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AppService;
 import com.ncu.appinfo.service.DevUserService;
 import com.ncu.appinfo.vo.AppSearchVo;
+import com.ncu.appinfo.vo.AppVersionVo;
 import com.ncu.appinfo.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,12 +152,42 @@ public class DevUserController {
     }
 
     @GetMapping("/appVersion")
-    public String addAppVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+    public String appVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                 @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                                @RequestParam(value = "appId") Long id,
+                                @RequestParam(value = "method") int method,
+                                HttpSession session,
                                 Model model){
-        Long id=2l;
         model.addAttribute("page", appService.listAppVersion(pageNum, pageSize, id));
-        return "developer/appVersion";
+        if (method==1){
+            return "forward:addAppVersion";
+        }
+        if (method==2){
+            return "forward:updateAppVersion";
+        }
+        return null;
+    }
+
+    @GetMapping("/addAppVersion")
+    public String toAddAppVersion(Map<String, Object> map){
+        map.put("appVersionVo", new AppVersionVo());
+        return "developer/addAppVersion";
+    }
+
+    @PostMapping("/addAppVersion")
+    public String addAppVersion(@Valid AppVersionVo appVersionVo, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "developer/addAppVersion";
+        }
+        int result=appService.addAppVersion(appVersionVo);
+        System.out.println(result);
+        return "redirect:app-list";
+    }
+
+    @GetMapping("/updateAppVersion")
+    public String toUpdateAppVersion(Map<String, Object> map){
+        map.put("appVersionVo", new AppVersionVo());
+        return "developer/updateAppVersion";
     }
 
 }

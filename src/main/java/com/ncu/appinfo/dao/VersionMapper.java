@@ -22,4 +22,5 @@ public interface VersionMapper {
     List<Version> listByAppId(Long appId);
 
     List<Version> selectVersionsByAppId(Long id);
+
 }
