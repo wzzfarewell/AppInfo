@@ -22,8 +22,12 @@ public interface CategoryMapper {
 
     List<String> listNameByCode(String categoryCode);
 
-    Long findIdByCategoryName(@Param(value = "categoryName")String categoryName);
+    Long findIdByCategoryName(String categoryName);
 
-    int addAppCategoryMapper(@Param(value = "appId") Long appId, @Param(value = "categoryId") Long categoryId);
+    int addAppCategoryMapper(@Param(value = "appId") Long appId, @Param(value = "appId") Long categoryId);
+
+    String findAppCategory(@Param(value = "appId")Long appId,@Param(value = "categoryCode")String categoryCode);
+
+
 
 }

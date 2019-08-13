@@ -39,5 +39,5 @@ public interface AppService {
 
     int addAppDetail(AppVo appVo);
 
-    int updateAppDetail(AppVo appVo);
+    AppVo getAppVo(Long appId);
 }

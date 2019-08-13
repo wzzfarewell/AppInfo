@@ -166,20 +166,12 @@ public class DevUserController {
     }
 
     @GetMapping("/app-update")
-    public String toUpdateAppDetail(Map<String, Object> map, HttpServletRequest request){
-        map.put("appVo", new AppVo());
+    public String updateApp(@Valid Long appId,Model model){
+        AppVo appVo = appService.getAppVo(appId);
+        model.addAttribute("appVo",appVo);
         return "developer/app-update";
     }
 
-    @PostMapping("/app-update")
-    public String updateAppDetail(@Valid AppVo appVo, BindingResult bindingResult){
-        if (bindingResult.hasErrors()){
-            return "developer/app-update";
-        }
-        int result=appService.updateAppDetail(appVo);
-        System.out.println(result);
-        return "redirect:app-list";
-    }
 
 
     @GetMapping("/appVersion")

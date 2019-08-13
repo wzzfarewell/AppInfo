@@ -35,4 +35,6 @@ public interface AppMapper {
     App selectByVersionId(Long id);
 
     int addAppVersion(@Param(value = "appId") Long appId,@Param(value = "versionId") Long versionId);
+
+    Long selectDevUserByAppId(Long appId);
 }

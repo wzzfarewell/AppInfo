@@ -165,4 +165,10 @@
       )
   </insert>
 
+  <select id="findAppStatus" resultType="java.lang.String">
+    select s.status_name
+    from app_status a join status s on a.status_id = s.id
+    where a.app_id = #{appId,jdbcType=BIGINT} and s.type_code = #{typeCode,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

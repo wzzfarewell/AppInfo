@@ -39,4 +39,6 @@ public interface StatusMapper {
     Long findIdByStatusName(String statusName);
 
     int addAppStatus(@Param(value = "appId") Long appId,@Param(value = "statusId") Long statusId);
+
+    String findAppStatus(@Param(value = "appId")Long appId,@Param(value = "typeCode")String typeCode);
 }
