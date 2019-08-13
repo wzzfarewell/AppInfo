@@ -7,7 +7,7 @@
 
   <display-name>Archetype Created Web Application</display-name>
   <welcome-file-list>
-    <welcome-file>pages/developer/index.jsp</welcome-file>
+    <welcome-file>pages/index.jsp</welcome-file>
   </welcome-file-list>
 
   <error-page>

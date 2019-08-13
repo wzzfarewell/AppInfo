@@ -1,13 +1,15 @@
 package com.ncu.appinfo.web.controller.developer;
 
-import com.ncu.appinfo.entity.App;
 import com.ncu.appinfo.entity.DevUser;
 import com.ncu.appinfo.entity.Version;
 import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AppService;
 import com.ncu.appinfo.service.DevUserService;
 import com.ncu.appinfo.service.VersionService;
-import com.ncu.appinfo.vo.*;
+import com.ncu.appinfo.vo.AppSearchVo;
+import com.ncu.appinfo.vo.AppVersionVo;
+import com.ncu.appinfo.vo.AppVo;
+import com.ncu.appinfo.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,6 +189,7 @@ public class DevUserController {
                                 @RequestParam(value = "method") int method,
                                 Model model){
         model.addAttribute("page", appService.listAppVersion(pageNum, pageSize, id));
+        model.addAttribute("appId",id);
         if (method==1){
             return "forward:addAppVersion";
         }

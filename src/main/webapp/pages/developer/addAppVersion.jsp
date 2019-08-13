@@ -29,97 +29,11 @@
 <body>
 <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
-    <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-
-        </div>
-        <div class="navbar-menu-wrapper d-flex align-items-stretch">
-            <div class="search-field d-none d-md-block">
-                <form class="d-flex align-items-center h-100" action="#">
-                    <div class="input-group">
-                        <div class="input-group-prepend bg-transparent">
-                            <i class="input-group-text border-0 mdi mdi-magnify"></i>
-                        </div>
-                        <input type="text" class="form-control bg-transparent border-0" placeholder="查找APP">
-                    </div>
-                </form>
-            </div>
-            <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item nav-profile dropdown">
-                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown"
-                       aria-expanded="false">
-                        <div class="nav-profile-img">
-                            <img src="../../images/faces/face1.jpg" alt="image">
-                            <span class="availability-status online"></span>
-                        </div>
-                        <div class="nav-profile-text">
-                            <p class="mb-1 text-black">小王</p>
-                        </div>
-                    </a>
-                    <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/logout">
-                            <i class="mdi mdi-logout mr-2 text-primary"></i>
-                            登出
-                        </a>
-                    </div>
-                </li>
-                <li class="nav-item d-none d-lg-block full-screen-link">
-                    <a class="nav-link">
-                        <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
-                    </a>
-                </li>
-                <li class="nav-item nav-settings d-none d-lg-block">
-                    <a class="nav-link" href="#">
-                        <i class="mdi mdi-format-line-spacing"></i>
-                    </a>
-                </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-                    data-toggle="offcanvas">
-                <span class="mdi mdi-menu"></span>
-            </button>
-        </div>
-    </nav>
+    <jsp:include page="index-elements/index_top.jsp"/>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
         <!-- partial:partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item nav-profile">
-                    <a href="#" class="nav-link">
-                        <div class="nav-profile-image">
-                            <img src="../../images/faces/face1.jpg" alt="profile">
-                            <span class="login-status online"></span>
-                            <!--change to offline or busy as needed-->
-                        </div>
-                        <div class="nav-profile-text d-flex flex-column">
-                            <span class="font-weight-bold mb-2">小王</span>
-                            <span class="text-secondary text-small">后台管理员</span>
-                        </div>
-                        <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/admin/home">
-                        <span class="menu-title">APP开发者管理</span>
-                        <i class="mdi mdi-account-multiple menu-icon"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                        <span class="menu-title">APP应用管理</span>
-                        <i class="menu-arrow"></i>
-                        <i class="mdi mdi-android menu-icon"></i>
-                    </a>
-                    <div class="collapse" id="ui-basic">
-                        <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="${pageContext.request.contextPath}/admin/app-manage">APP审核</a></li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </nav>
+        <jsp:include page="index-elements/index_left.jsp"/>
         <!-- partial -->
         <div class="main-panel">
             <div class="content-wrapper">
@@ -196,8 +110,7 @@
                                 <h4 class="card-title">增加APP版本信息</h4>
 
                                 <form:form class="forms-sample" method="post" modelAttribute="appVersionVo" action="${pageContext.request.contextPath}/developer/addAppVersion" >
-                                    <form:hidden path="appId" value="${page.list[0].appId}" />
-                                    <form:hidden path="appName" value="${page.list[0].appName}" />
+                                    <form:hidden path="appId" value="${appId}" />
                                     <form:hidden path="updateTime" value="" />
                                     <form:hidden path="statusName" value="未发布" />
 
@@ -241,15 +154,7 @@
 
             </div>
             <!-- content-wrapper ends -->
-            <!-- partial:partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2017 <a
-                    href="https://www.bootstrapdash.com/" target="_blank">Bootstrap Dash</a>. All rights reserved.</span>
-                    <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i
-                            class="mdi mdi-heart text-danger"></i></span>
-                </div>
-            </footer>
+            <jsp:include page="index-elements/index_bottom.jsp"/>
             <!-- partial -->
         </div>
         <!-- main-panel ends -->
