@@ -41,6 +41,27 @@ public class AppVo {
 
     private Long devId;
 
+    public AppVo() {
+    }
+
+    public AppVo(Long appId, String appName, String apkName, String supportRom, BigDecimal appSize, String firstCategory, String secondCategory, String thirdCategory, String appStatus, String appPlatform, String publishStatus, Version version, String appInfo, String language, Long devId) {
+        this.appId = appId;
+        this.appName = appName;
+        this.apkName = apkName;
+        this.supportRom = supportRom;
+        this.appSize = appSize;
+        this.firstCategory = firstCategory;
+        this.secondCategory = secondCategory;
+        this.thirdCategory = thirdCategory;
+        this.appStatus = appStatus;
+        this.appPlatform = appPlatform;
+        this.publishStatus = publishStatus;
+        this.version = version;
+        this.appInfo = appInfo;
+        this.language = language;
+        this.devId = devId;
+    }
+
     public Long getAppId() {
         return appId;
     }

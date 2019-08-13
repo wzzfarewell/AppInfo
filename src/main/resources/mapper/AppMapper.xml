@@ -216,4 +216,10 @@
   </update>
 
 
+  <select id="selectDevUserByAppId" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    select ad.dev_id
+    from app join app_dev ad on app.app_id = ad.app_id
+    where app.app_id=#{appId,jdbcType=BIGINT}
+  </select>
+
 </mapper>

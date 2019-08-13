@@ -8,6 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -189,7 +194,7 @@
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=2">修改版本</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">修改</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit?appId=${app.appId}">修改</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="#">查看</a>
                                                         <div class="dropdown-divider"></div>
@@ -277,6 +282,7 @@
     }
 
 </script>
+
 
 </body>
 

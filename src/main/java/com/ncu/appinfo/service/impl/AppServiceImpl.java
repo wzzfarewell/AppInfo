@@ -17,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,6 +44,11 @@ public class AppServiceImpl implements AppService {
         this.categoryMapper = categoryMapper;
         this.statusMapper = statusMapper;
         this.devUserMapper = devUserMapper;
+    }
+
+    @Override
+    public App selectByPrimaryKey(Long appId) {
+        return appMapper.selectByPrimaryKey(appId);
     }
 
     @Override
@@ -345,5 +351,37 @@ public class AppServiceImpl implements AppService {
     public int putOffApp(Long id){
         Long statusId =5l;
         return appMapper.updateAppStatus(id,statusId);
+    }
+
+    @Override
+    public AppVo getAppVo(Long appId) {
+        App app=appMapper.selectByPrimaryKey(appId);
+        String firstCategory=categoryMapper.findAppCategory(appId,"一级分类");
+        String secondCategory=categoryMapper.findAppCategory(appId,"二级分类");
+        String thirdCategory=categoryMapper.findAppCategory(appId,"三级分类");
+        Version version=versionMapper.selectNewestByAppId(appId);
+        Long devId=appMapper.selectDevUserByAppId(appId);
+        String appStatus=statusMapper.findAppStatus(appId,"AppStatus");
+        String appPlatform=statusMapper.findAppStatus(appId,"AppPlatform");
+        String publishStatus=statusMapper.findAppStatus(appId,"PublishStatus");
+
+        AppVo appVo = new AppVo(
+                app.getAppId(),
+                app.getAppName(),
+                app.getApkName(),
+                app.getSupportRom(),
+                app.getAppSize(),
+                firstCategory,
+                secondCategory,
+                thirdCategory,
+                appStatus,
+                appPlatform,
+               publishStatus,
+                version,
+                app.getAppInfo(),
+                app.getLanguage(),
+                devId
+        );
+        return appVo;
     }
 }

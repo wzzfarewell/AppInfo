@@ -1,15 +1,13 @@
 package com.ncu.appinfo.web.controller.developer;
 
+import com.ncu.appinfo.entity.App;
 import com.ncu.appinfo.entity.DevUser;
 import com.ncu.appinfo.entity.Version;
 import com.ncu.appinfo.global.Constant;
 import com.ncu.appinfo.service.AppService;
 import com.ncu.appinfo.service.DevUserService;
 import com.ncu.appinfo.service.VersionService;
-import com.ncu.appinfo.vo.AppSearchVo;
-import com.ncu.appinfo.vo.AppVersionVo;
-import com.ncu.appinfo.vo.AppVo;
-import com.ncu.appinfo.vo.UserVo;
+import com.ncu.appinfo.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,7 +128,7 @@ public class DevUserController {
 
 
     @GetMapping("/app-list")
-    public String appManage(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+    public String appList(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                             @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
                             HttpSession session,Model model){
         DevUser devUser=(DevUser)session.getAttribute("current_user");
@@ -167,6 +165,15 @@ public class DevUserController {
         System.out.println(result);
         return "redirect:app-list";
     }
+
+    @GetMapping("/app-edit")
+    public String updateApp(@Valid Long appId,Model model){
+        AppVo appVo = appService.getAppVo(appId);
+        model.addAttribute("appVo",appVo);
+        return "developer/app-edit";
+    }
+
+
 
     @GetMapping("/appVersion")
     public String appVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
