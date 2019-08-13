@@ -196,7 +196,7 @@
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit?appId=${app.appId}">修改</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">查看</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check?appId=${app.appId}">查看</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="#">删除</a>
                                                         <div class="dropdown-divider"></div>
