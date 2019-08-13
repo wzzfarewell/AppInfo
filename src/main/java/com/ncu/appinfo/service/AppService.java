@@ -42,4 +42,8 @@ public interface AppService {
     int updateAppDetail(AppVo appVo);
 
     AppVo getAppVo(Long appId);
+
+    int putOnApp(Long id);
+
+    int putOffApp(Long id);
 }

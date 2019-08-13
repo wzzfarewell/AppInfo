@@ -181,7 +181,7 @@
                                             <td>${app.appSize}</td>
                                             <td>${app.appPlatform}</td>
                                             <td>${app.firstCategory}>>${app.secondCategory}>>${app.thirdCategory}</td>
-                                            <td>${app.appStatus}</td>
+                                            <td id="appStatus${app.appId}">${app.appStatus}</td>
                                             <td>${app.version.downloadCount}</td>
                                             <td>${app.version.versionNo}</td>
                                             <td>
@@ -200,9 +200,9 @@
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="#">删除</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">上架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}')">上架</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">下架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOff('${app.appId}')">下架</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -252,6 +252,39 @@
 <!-- Custom js for this page-->
 <script src="../../js/dashboard.js"></script>
 <!-- End custom js for this page-->
+
+<script src="../../js/jquery-1.12.4.js"></script>
+
+<script>
+    function putOn(id){
+        var status=$("#appStatus"+id).text();
+        if (status=="审核通过" || status=="已下架") {
+            $.ajax({url:"${pageContext.request.contextPath}/developer/putOn/"+id,success:function(data){
+                    result=JSON.parse(data);
+                    $("#appStatus"+id).html(result["appStatus"]);
+                }});
+        }
+        else {
+            alert("只能上架通过审核或下架的APP")
+        }
+
+    }
+
+    function putOff(id){
+        var status=$("#appStatus"+id).text();
+        if (status=="已上架" ) {
+            $.ajax({url:"${pageContext.request.contextPath}/developer/putOff/"+id,success:function(data){
+                    result=JSON.parse(data);
+                    $("#appStatus"+id).html(result["appStatus"]);
+                }});
+        }
+        else {
+            alert("只能下架已上架的APP")
+        }
+    }
+
+</script>
+
 
 </body>
 

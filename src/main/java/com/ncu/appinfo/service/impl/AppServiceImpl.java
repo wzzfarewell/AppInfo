@@ -17,7 +17,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -299,6 +298,10 @@ public class AppServiceImpl implements AppService {
     @Override
     public int updateAppVersion(AppVersionVo appVersionVo) {
 
+        if ("已发布".equals(appVersionVo.getStatusName())){
+            return 0;
+        }
+
         int result=0;
         Version version=new Version();
 
@@ -338,6 +341,15 @@ public class AppServiceImpl implements AppService {
         result+=devUserMapper.addAppDev(appId,appVo.getDevId());
 
         return result;
+    }
+
+    public int putOnApp(Long id){
+        Long statusId =4l;
+        return appMapper.updateAppStatus(id,statusId);
+    }
+    public int putOffApp(Long id){
+        Long statusId =5l;
+        return appMapper.updateAppStatus(id,statusId);
     }
 
     @Override

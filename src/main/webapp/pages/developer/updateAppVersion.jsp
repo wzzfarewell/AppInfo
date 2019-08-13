@@ -168,7 +168,7 @@
                                             <td>${obj.downloadUrl}</td>
                                             <td>${obj.updateTime}</td>
 
-                                            <td><button onclick="onclick1('${obj.versionId}')" > <i class="mdi mdi-pencil-box icon-md"></i></button></td>  <!-- 点这个按钮把obj的值填到表格 -->
+                                            <td><a href="javascript:void(0);" onclick="onclick1('${obj.versionId}','${obj.statusName}')" > <i class="mdi mdi-pencil-box icon-md"></i></a></td>  <!-- 点这个按钮把obj的值填到表格 -->
                                         </tr>
                                     </c:forEach>
                                     </tbody>
@@ -276,9 +276,9 @@
 <script src="../../js/jquery-1.12.4.js"></script>
 
 <script>
-    function onclick1(id){
+    function onclick1(id,statusName){
         $.getJSON("${pageContext.request.contextPath}/developer/selectVersion/"+id,function(data){
-            if (data["statusName"]== "已发布"){
+            if (statusName== "已发布"){
                 alert("已发布版本不能修改!")
             }else {
                 $("#versionNo").val(data["versionNo"]);
@@ -287,6 +287,7 @@
                 $("#apkFileName").val(data["apkFileName"]);
                 $("#downloadUrl").val(data["downloadUrl"]);
                 $("#versionId").val(data["id"]);
+                $("#statusName").val(statusName);
             }
         });
     }
