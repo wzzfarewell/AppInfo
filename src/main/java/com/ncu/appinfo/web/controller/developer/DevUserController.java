@@ -179,6 +179,17 @@ public class DevUserController {
         return "redirect:app-list";
     }
 
+    @GetMapping("/app-check")
+    public String checkApp(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                           @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
+                           @Valid Long appId,
+                           Model model){
+        AppVo appVo = appService.getAppVo(appId);
+        model.addAttribute("appVo",appVo);
+        model.addAttribute("page", appService.listAppVersion(pageNum, pageSize, appId));
+        return "developer/app-check";
+    }
+
 
     @GetMapping("/appVersion")
     public String appVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
