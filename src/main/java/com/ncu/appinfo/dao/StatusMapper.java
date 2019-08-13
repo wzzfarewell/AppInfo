@@ -42,5 +42,8 @@ public interface StatusMapper {
 
     int updateAppStatusByType(@Param(value = "appId") Long appId, @Param(value = "statusId") Long statusId,@Param(value = "typeCode") String typeCode);
 
+    int deleteAppStatus(Long appId);
+
     String findAppStatus(@Param(value = "appId")Long appId,@Param(value = "typeCode")String typeCode);
+
 }

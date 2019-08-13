@@ -43,6 +43,8 @@ public interface AppService {
 
     AppVo getAppVo(Long appId);
 
+    void deleteApp(Long appId);
+
     int putOnApp(Long id);
 
     int putOffApp(Long id);

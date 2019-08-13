@@ -198,7 +198,7 @@
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check?appId=${app.appId}">查看</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">删除</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="deleteApp('${app.appId}','${app.appName}')">删除</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}')">上架</a>
                                                         <div class="dropdown-divider"></div>
@@ -256,6 +256,15 @@
 <script src="../../js/jquery-1.12.4.js"></script>
 
 <script>
+    function deleteApp(appId,appName) {
+        if(confirm('你确定要删除APP应用【'+appName+'】及其所有版本?')) {
+            $.post("<%=basePath%>developer/app-delete",{"appId":appId},function(data){
+                alert("APP应用【"+appName+"】及其所有版本删除成功！");
+                window.location.reload();
+            });
+        }
+    }
+
     function putOn(id){
         var status=$("#appStatus"+id).text();
         if (status=="审核通过" || status=="已下架") {

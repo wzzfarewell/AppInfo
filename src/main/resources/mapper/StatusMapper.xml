@@ -172,6 +172,11 @@
     where a.app_id=#{appId,jdbcType=BIGINT} and s.type_code=#{typeCode,jdbcType=VARCHAR}
   </update>
 
+  <delete id="deleteAppStatus" parameterType="java.lang.Long" >
+    delete from app_status
+    where app_id = #{appId,jdbcType=BIGINT}
+  </delete>
+
   <select id="findAppStatus" resultType="java.lang.String">
     select s.status_name
     from app_status a join status s on a.status_id = s.id

@@ -137,6 +137,11 @@
     where ac.app_id=#{appId,jdbcType=BIGINT} and ca.category_code=#{categoryCode,jdbcType=VARCHAR}
   </update>
 
+  <delete id="deleteAppCategory" parameterType="java.lang.Long" >
+    delete from app_category
+    where app_id = #{appId,jdbcType=BIGINT}
+  </delete>
+
   <select id="findAppCategory" resultType="java.lang.String">
     select c.category_name
     from app_category ac join category c on ac.category_id = c.id

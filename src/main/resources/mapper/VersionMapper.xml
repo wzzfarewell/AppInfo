@@ -184,4 +184,12 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+  <delete id="deleteAppVersion" parameterType="java.lang.Long" >
+    delete  v,av,vs
+    from  version v
+    left join app_version av on v.id=av.version_id
+    left join version_status vs on v.id=vs.version_id
+    where av.app_id = #{appId,jdbcType=BIGINT}
+  </delete>
+
 </mapper>

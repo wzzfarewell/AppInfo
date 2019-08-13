@@ -159,4 +159,9 @@
     values (#{appId,jdbcType=BIGINT}, #{devId,jdbcType=BIGINT}
       )
   </insert>
+
+  <delete id="deleteAppDev" parameterType="java.lang.Long" >
+    delete from app_dev
+    where app_id = #{appId,jdbcType=BIGINT}
+  </delete>
 </mapper>

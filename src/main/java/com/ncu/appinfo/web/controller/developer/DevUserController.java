@@ -192,6 +192,13 @@ public class DevUserController {
         return "developer/app-check";
     }
 
+    @RequestMapping("/app-delete")
+    @ResponseBody
+    public String deleteApp(Long appId) {
+        appService.deleteApp(appId);
+        return "OK";
+    }
+
 
     @GetMapping("/appVersion")
     public String appVersion(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,

@@ -406,4 +406,13 @@ public class AppServiceImpl implements AppService {
 
         return result;
     }
+
+    @Override
+    public void deleteApp(Long appId) {
+        appMapper.deleteByPrimaryKey(appId);
+        categoryMapper.deleteAppCategory(appId);
+        devUserMapper.deleteAppDev(appId);
+        statusMapper.deleteAppStatus(appId);
+        versionMapper.deleteAppVersion(appId);
+    }
 }

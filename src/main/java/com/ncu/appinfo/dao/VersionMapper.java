@@ -24,4 +24,7 @@ public interface VersionMapper {
     List<Version> selectVersionsByAppId(Long id);
 
     int updateAppVersion(Version version);
+
+    int deleteAppVersion(Long appId);
+
 }

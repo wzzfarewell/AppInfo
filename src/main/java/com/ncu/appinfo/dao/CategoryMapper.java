@@ -28,8 +28,7 @@ public interface CategoryMapper {
 
     int updateAppCategory(@Param(value = "appId") Long appId, @Param(value = "categoryId") Long categoryId,@Param(value = "categoryCode") String categoryCode);
 
+    int deleteAppCategory(Long appId);
+
     String findAppCategory(@Param(value = "appId")Long appId,@Param(value = "categoryCode")String categoryCode);
-
-
-
 }
