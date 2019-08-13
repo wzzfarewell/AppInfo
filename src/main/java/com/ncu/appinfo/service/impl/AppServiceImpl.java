@@ -328,9 +328,9 @@ public class AppServiceImpl implements AppService {
         result=appMapper.insertSelective(app);
 
         Long appId=app.getAppId();
-        result+=categoryMapper.addAppCategoryMapper(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()));
-        result+=categoryMapper.addAppCategoryMapper(appId,categoryMapper.findIdByCategoryName(appVo.getSecondCategory()));
-        result+=categoryMapper.addAppCategoryMapper(appId,categoryMapper.findIdByCategoryName(appVo.getThirdCategory()));
+        result+=categoryMapper.addAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()));
+        result+=categoryMapper.addAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getSecondCategory()));
+        result+=categoryMapper.addAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getThirdCategory()));
 
         result+=statusMapper.addAppStatus(appId,statusMapper.findIdByStatusName(appVo.getAppPlatform()));
         /*添加待审核状态*/
@@ -370,5 +370,28 @@ public class AppServiceImpl implements AppService {
                 devId
         );
         return appVo;
+    }
+
+    @Override
+    public int updateAppDetail(AppVo appVo) {
+        int result=0;
+        Long appId=appVo.getAppId();
+        App app = new App();
+        app.setAppId(appId);
+        app.setAppName(appVo.getAppName());
+        app.setApkName(appVo.getApkName());
+        app.setSupportRom(appVo.getSupportRom());
+        app.setLanguage(appVo.getLanguage());
+        app.setAppSize(appVo.getAppSize());
+        app.setAppInfo(appVo.getAppInfo());
+        result=appMapper.updateByPrimaryKeySelective(app);
+
+        result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()),"一级分类");
+        result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getSecondCategory()),"二级分类");
+        result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getThirdCategory()),"三级分类");
+
+        result+=statusMapper.updateAppStatusByType(appId,statusMapper.findIdByStatusName(appVo.getAppPlatform()),"AppPlatform");
+
+        return result;
     }
 }

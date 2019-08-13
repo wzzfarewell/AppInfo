@@ -66,41 +66,42 @@
                                 <p class="card-description">
                                     请修改相应APP基础信息并保存
                                 </p>
-                                <form class="forms-sample" method="post" action="${pageContext.request.contextPath}/developer/app-update">
+                                <form class="forms-sample" id="edit_appDetail_form" action="${pageContext.request.contextPath}/developer/app-update">
+                                    <input hidden name="appId" value="${appVo.appId}"/>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">软件名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="appName" value="${appVo.appName}" class="form-control" placeholder=""/>
+                                            <input type="text" name="appName" value="${appVo.appName}" class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">APK名称</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="apkName" value="${appVo.apkName}" class="form-control" placeholder=""/>
+                                            <input type="text" name="apkName" value="${appVo.apkName}" class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">支持的Rom</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="supportRom" value="${appVo.supportRom}" class="form-control" placeholder=""/>
+                                            <input type="text" name="supportRom" value="${appVo.supportRom}" class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">界面语言</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="language" value="${appVo.language}" class="form-control" placeholder=""/>
+                                            <input type="text" name="language" value="${appVo.language}" class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">软件大小</label>
                                         <div class="col-sm-10">
-                                            <input type="text" id="appSize" value="${appVo.appSize}" class="form-control" placeholder=""/>
+                                            <input type="text" name="appSize" value="${appVo.appSize}" class="form-control" placeholder=""/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">所属平台</label>
                                         <div class="col-sm-10">
-                                            <select path="appPlatform" class="form-control">
+                                            <select name="appPlatform" class="form-control">
                                                 <option value="">--选择平台--</option>
                                                 <c:forEach items="${appPlatform}" var="item">
                                                     <option <c:if test="${item == appVo.appPlatform}"> selected</c:if>>${item}</option>
@@ -111,52 +112,52 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">一级分类</label>
                                         <div class="col-sm-10">
-                                            <form:select path="firstCategory" class="form-control">
+                                            <select name="firstCategory" class="form-control">
                                                 <option value="">--选择分类--</option>
                                                 <c:forEach items="${firstCategory}" var="item">
                                                     <option <c:if test="${item == appVo.firstCategory}"> selected</c:if>>${item}</option>
                                                 </c:forEach>
-                                            </form:select>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">二级分类</label>
                                         <div class="col-sm-10">
-                                            <form:select path="secondCategory" class="form-control">
+                                            <select name="secondCategory" class="form-control">
                                                 <option value="">--选择分类--</option>
                                                 <c:forEach items="${secondCategory}" var="item">
                                                     <option <c:if test="${item == appVo.secondCategory}"> selected</c:if>>${item}</option>
                                                 </c:forEach>
-                                            </form:select>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">三级分类</label>
                                         <div class="col-sm-10">
-                                            <form:select path="thirdCategory" class="form-control">
+                                            <select name="thirdCategory" class="form-control">
                                                 <option value="">--选择分类--</option>
                                                 <c:forEach items="${thirdCategory}" var="item">
                                                     <option <c:if test="${item == appVo.thirdCategory}"> selected</c:if>>${item}</option>
                                                 </c:forEach>
-                                            </form:select>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">APP状态</label>
                                         <div class="col-sm-10">
-                                            <input type="text" value="${appVo.appStatus}" id="appStatus"  class="form-control" readonly placeholder="">
+                                            <input type="text" value="${appVo.appStatus}" name="appStatus"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">应用简介</label>
                                         <div class="col-sm-10">
-                                            <textarea id="appInfo" class="form-control" rows="5">${appVo.appInfo}</textarea>
+                                            <textarea name="appInfo" class="form-control" rows="5">${appVo.appInfo}</textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">LOGO图片</label>
                                         <div class="col-sm-10">
-                                            <input type="file" id="logo" value="" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
+                                            <input type="file" name="logo" value="" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-gradient-primary mr-2">保存</button>

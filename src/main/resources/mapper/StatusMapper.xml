@@ -165,6 +165,13 @@
       )
   </insert>
 
+  <update id="updateAppStatusByType">
+    update app_status a
+    join status s on a.status_id = s.id
+    set a.status_id=#{statusId,jdbcType=BIGINT}
+    where a.app_id=#{appId,jdbcType=BIGINT} and s.type_code=#{typeCode,jdbcType=VARCHAR}
+  </update>
+
   <select id="findAppStatus" resultType="java.lang.String">
     select s.status_name
     from app_status a join status s on a.status_id = s.id

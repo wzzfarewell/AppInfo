@@ -24,7 +24,9 @@ public interface CategoryMapper {
 
     Long findIdByCategoryName(String categoryName);
 
-    int addAppCategoryMapper(@Param(value = "appId") Long appId, @Param(value = "appId") Long categoryId);
+    int addAppCategory(@Param(value = "appId") Long appId, @Param(value = "categoryId") Long categoryId);
+
+    int updateAppCategory(@Param(value = "appId") Long appId, @Param(value = "categoryId") Long categoryId,@Param(value = "categoryCode") String categoryCode);
 
     String findAppCategory(@Param(value = "appId")Long appId,@Param(value = "categoryCode")String categoryCode);
 

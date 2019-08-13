@@ -166,12 +166,17 @@ public class DevUserController {
     }
 
     @GetMapping("/app-edit")
-    public String updateApp(@Valid Long appId,Model model){
+    public String editApp(@Valid Long appId,Model model){
         AppVo appVo = appService.getAppVo(appId);
         model.addAttribute("appVo",appVo);
         return "developer/app-edit";
     }
 
+    @RequestMapping("/app-update")
+    public String updateApp(AppVo appVo) {
+        appService.updateAppDetail(appVo);
+        return "redirect:app-list";
+    }
 
 
     @GetMapping("/appVersion")
