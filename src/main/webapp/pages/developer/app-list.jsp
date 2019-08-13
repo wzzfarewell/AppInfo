@@ -200,9 +200,9 @@
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="#">删除</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}','${app.appStatus}')">上架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}')">上架</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOff('${app.appId}','${app.appStatus}')">下架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOff('${app.appId}')">下架</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -256,7 +256,8 @@
 <script src="../../js/jquery-1.12.4.js"></script>
 
 <script>
-    function putOn(id,status){
+    function putOn(id){
+        var status=$("#appStatus"+id).text();
         if (status=="审核通过" || status=="已下架") {
             $.ajax({url:"${pageContext.request.contextPath}/developer/putOn/"+id,success:function(data){
                     result=JSON.parse(data);
@@ -269,7 +270,8 @@
 
     }
 
-    function putOff(id,status){
+    function putOff(id){
+        var status=$("#appStatus"+id).text();
         if (status=="已上架" ) {
             $.ajax({url:"${pageContext.request.contextPath}/developer/putOff/"+id,success:function(data){
                     result=JSON.parse(data);
