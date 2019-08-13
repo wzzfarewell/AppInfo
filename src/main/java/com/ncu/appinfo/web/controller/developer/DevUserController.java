@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -219,6 +220,24 @@ public class DevUserController {
     @ResponseBody
     public Version selectVersion(@PathVariable("id") Long id){
         return versionService.selectVersion(id);
+    }
+
+    @GetMapping("/putOn/{id}")
+    @ResponseBody
+    public Map<String, String> putOn(@PathVariable("id") Long id){
+        System.out.println(appService.putOnApp(id));
+        Map<String,String> result=new HashMap<>();
+        result.put("appStatus","已上架");
+        return result;
+    }
+
+    @GetMapping("/putOff/{id}")
+    @ResponseBody
+    public Map<String, String> putOff(@PathVariable("id") Long id){
+        System.out.println(appService.putOffApp(id));
+        Map<String,String> result=new HashMap<>();
+        result.put("appStatus","已下架");
+        return result;
     }
 
 }

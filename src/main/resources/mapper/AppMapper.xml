@@ -207,4 +207,13 @@
       )
   </insert>
 
+  <update id="updateAppStatus" parameterType="java.lang.Long">
+    update app_status
+    set
+      status_id = #{statusId,jdbcType=BIGINT},
+      update_time = now()
+    where app_id = #{appId,jdbcType=BIGINT} AND ( status_id=2 OR status_id=4 OR status_id =5 )
+  </update>
+
+
 </mapper>
