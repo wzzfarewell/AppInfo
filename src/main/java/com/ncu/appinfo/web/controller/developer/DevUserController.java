@@ -165,7 +165,7 @@ public class DevUserController {
         }
         // 图片上传
         // 设置图片名称，不能重复，可以使用uuid
-        String picName = UUID.randomUUID().toString();
+        String picName = UUID.randomUUID().toString().replaceAll("-", "");
         // 获取文件名
         String oriName = logoPic.getOriginalFilename();
         // 获取图片后缀
@@ -181,7 +181,7 @@ public class DevUserController {
         // 开始上传
         logoPic.transferTo(new File(logoPicPath));
 
-        appVo.setLogoPicPath(logoPicPath);
+        appVo.setLogoPicPath("upload/"+ picName + extName);
         int result=appService.addAppDetail(appVo);
         System.out.println(result);
         return "redirect:app-list";

@@ -17,7 +17,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>新增APP</title>
+    <title>APP开发者平台-APP添加</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -155,7 +155,7 @@
                                         <label class="col-sm-2 col-form-label">LOGO图片</label>
                                         <div class="col-sm-10">
                                             <c:if test="${appVo.logoPicPath != null}">
-                                                <img src="${appVo.logoPicPath}" width="100" height="100"/>
+                                                <img src="${pageContext.request.contextPath}/${appVo.logoPicPath}" width="100" height="100"/>
                                             </c:if>
                                             <input type="file" name="logoPic" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
                                         </div>
