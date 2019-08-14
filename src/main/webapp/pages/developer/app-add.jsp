@@ -17,7 +17,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>APP审核</title>
+    <title>新增APP</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -62,7 +62,7 @@
                                 <p class="card-description">
                                     请您填写APP基础信息
                                 </p>
-                                <form:form class="forms-sample" modelAttribute="appVo" method="post" action="${pageContext.request.contextPath}/developer/app-add">
+                                <form:form class="forms-sample" modelAttribute="appVo" method="post" action="${pageContext.request.contextPath}/developer/app-add" enctype="multipart/form-data">
                                     <form:hidden path="devId" value="${sessionScope.current_user.getId()}" />
                                     <form:hidden path="appStatus" value="待审核" />
                                     <div class="form-group row">
@@ -154,7 +154,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">LOGO图片</label>
                                         <div class="col-sm-10">
-                                            <input type="file" path="logo" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
+                                            <c:if test="${appVo.logoPicPath != null}">
+                                                <img src="${appVo.logoPicPath}" width="100" height="100"/>
+                                            </c:if>
+                                            <input type="file" name="logoPic" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-gradient-primary mr-2">添加</button>

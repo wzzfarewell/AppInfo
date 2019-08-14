@@ -33,6 +33,8 @@ public class AppVo {
 
     private String publishStatus;
 
+    private String logoPicPath;
+
     private Version version;
 
     private String appInfo;
@@ -44,7 +46,7 @@ public class AppVo {
     public AppVo() {
     }
 
-    public AppVo(Long appId, String appName, String apkName, String supportRom, BigDecimal appSize, String firstCategory, String secondCategory, String thirdCategory, String appStatus, String appPlatform, String publishStatus, Version version, String appInfo, String language, Long devId) {
+    public AppVo(Long appId, String appName, String apkName, String supportRom, BigDecimal appSize, String firstCategory, String secondCategory, String thirdCategory, String appStatus, String appPlatform, String publishStatus, String logoPicPath, Version version, String appInfo, String language, Long devId) {
         this.appId = appId;
         this.appName = appName;
         this.apkName = apkName;
@@ -56,6 +58,7 @@ public class AppVo {
         this.appStatus = appStatus;
         this.appPlatform = appPlatform;
         this.publishStatus = publishStatus;
+        this.logoPicPath = logoPicPath;
         this.version = version;
         this.appInfo = appInfo;
         this.language = language;
@@ -179,6 +182,14 @@ public class AppVo {
     }
     public void setDevId(Long devId) {
         this.devId = devId;
+    }
+
+    public String getLogoPicPath() {
+        return logoPicPath;
+    }
+
+    public void setLogoPicPath(String logoPicPath) {
+        this.logoPicPath = logoPicPath;
     }
 
     @Override

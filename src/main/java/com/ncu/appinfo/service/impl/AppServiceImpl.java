@@ -318,6 +318,16 @@ public class AppServiceImpl implements AppService {
         return result;
     }
 
+    public int putOnApp(Long id){
+        Long statusId =4l;
+        return appMapper.updateAppStatus(id,statusId);
+    }
+    public int putOffApp(Long id){
+        Long statusId =5l;
+        return appMapper.updateAppStatus(id,statusId);
+    }
+
+
     @Override
     public int addAppDetail(AppVo appVo) {
         int result=0;
@@ -328,6 +338,7 @@ public class AppServiceImpl implements AppService {
         app.setLanguage(appVo.getLanguage());
         app.setAppSize(appVo.getAppSize());
         app.setAppInfo(appVo.getAppInfo());
+        app.setLogoPicPath(appVo.getLogoPicPath());
         result=appMapper.insertSelective(app);
 
         Long appId=app.getAppId();
@@ -343,14 +354,6 @@ public class AppServiceImpl implements AppService {
         return result;
     }
 
-    public int putOnApp(Long id){
-        Long statusId =4l;
-        return appMapper.updateAppStatus(id,statusId);
-    }
-    public int putOffApp(Long id){
-        Long statusId =5l;
-        return appMapper.updateAppStatus(id,statusId);
-    }
 
     @Override
     public AppVo getAppVo(Long appId) {
@@ -376,6 +379,7 @@ public class AppServiceImpl implements AppService {
                 appStatus,
                 appPlatform,
                publishStatus,
+                app.getLogoPicPath(),
                 version,
                 app.getAppInfo(),
                 app.getLanguage(),
@@ -396,6 +400,7 @@ public class AppServiceImpl implements AppService {
         app.setLanguage(appVo.getLanguage());
         app.setAppSize(appVo.getAppSize());
         app.setAppInfo(appVo.getAppInfo());
+        app.setLogoPicPath(appVo.getLogoPicPath());
         result=appMapper.updateByPrimaryKeySelective(app);
 
         result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()),"一级分类");

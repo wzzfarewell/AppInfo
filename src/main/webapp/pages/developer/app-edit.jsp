@@ -21,7 +21,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>APP审核</title>
+    <title>修改APP基础信息</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -157,7 +157,10 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">LOGO图片</label>
                                         <div class="col-sm-10">
-                                            <input type="file" name="logo" value="" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
+                                            <c:if test="${appVo.logoPicPath != null}">
+                                                <img src="${appVo.logoPicPath}" width="100" height="100"/>
+                                            </c:if>
+                                            <input type="file" name="logoPic" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-gradient-primary mr-2">保存</button>

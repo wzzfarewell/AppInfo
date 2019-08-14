@@ -18,15 +18,15 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @Controller
 @RequestMapping("/developer")
@@ -159,10 +159,29 @@ public class DevUserController {
      * @return
      */
     @PostMapping("/app-add")
-    public String addApp(@ModelAttribute("appVo")AppVo appVo,BindingResult bindingResult){
+    public String addApp(HttpServletRequest request ,@ModelAttribute("appVo")AppVo appVo, MultipartFile logoPic, BindingResult bindingResult) throws Exception {
         if (bindingResult.hasErrors()){
             return "developer/app-add";
         }
+        // 图片上传
+        // 设置图片名称，不能重复，可以使用uuid
+        String picName = UUID.randomUUID().toString();
+        // 获取文件名
+        String oriName = logoPic.getOriginalFilename();
+        // 获取图片后缀
+        String extName = oriName.substring(oriName.lastIndexOf("."));
+
+        String url = request.getSession().getServletContext().getRealPath("/upload");
+        File fileUrl = new File(url);
+        if(!fileUrl.exists()){
+            fileUrl.mkdir();
+        }
+        String logoPicPath = url + "/" + picName + extName;
+
+        // 开始上传
+        logoPic.transferTo(new File(logoPicPath));
+
+        appVo.setLogoPicPath(logoPicPath);
         int result=appService.addAppDetail(appVo);
         System.out.println(result);
         return "redirect:app-list";
