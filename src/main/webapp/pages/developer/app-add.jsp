@@ -59,47 +59,45 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">APP基础信息</h4>
-                                <p class="card-description">
-                                    请您填写APP基础信息
-                                </p>
+                                <br><br>
                                 <form:form class="forms-sample" modelAttribute="appVo" method="post" action="${pageContext.request.contextPath}/developer/app-add" enctype="multipart/form-data">
                                     <form:hidden path="devId" value="${sessionScope.current_user.getId()}" />
                                     <form:hidden path="appStatus" value="待审核" />
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">软件名称</label>
-                                        <div class="col-sm-10">
-                                            <form:input type="text" path="appName" class="form-control" placeholder=""/>
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">软件名称</label>
+                                        <div class="col-sm-8">
+                                            <form:input type="text" path="appName" class="form-control" placeholder="请输入软件名称"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">APK名称</label>
-                                        <div class="col-sm-10">
-                                            <form:input type="text" path="apkName"  class="form-control" placeholder=""/>
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">APK名称</label>
+                                        <div class="col-sm-8">
+                                            <form:input type="text" path="apkName"  class="form-control" placeholder="请输入APK名称"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">支持的Rom</label>
-                                        <div class="col-sm-10">
-                                            <form:input type="text" path="supportRom"  class="form-control" placeholder=""/>
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">支持的Rom</label>
+                                        <div class="col-sm-8">
+                                            <form:input type="text" path="supportRom"  class="form-control" placeholder="请输入支持的Rom"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">界面语言</label>
-                                        <div class="col-sm-10">
-                                            <form:input type="text" path="language"  class="form-control" placeholder=""/>
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">界面语言</label>
+                                        <div class="col-sm-8">
+                                            <form:input type="text" path="language"  class="form-control" placeholder="请输入软件支持的界面语言"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">软件大小</label>
-                                        <div class="col-sm-10">
-                                            <form:input type="text" path="appSize"  class="form-control" placeholder=""/>
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">软件大小</label>
+                                        <div class="col-sm-8">
+                                            <form:input type="text" path="appSize"  class="form-control" placeholder="请输入软件大小，单位为Mb"/>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">所属平台</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">所属平台</label>
+                                        <div class="col-sm-8">
                                             <form:select path="appPlatform" class="form-control">
-                                                <option value="">--选择平台--</option>
+                                                <option value="">--请选择平台--</option>
                                                 <c:forEach items="${appPlatform}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -107,10 +105,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">一级分类</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">一级分类</label>
+                                        <div class="col-sm-8">
                                             <form:select path="firstCategory" class="form-control">
-                                                <option value="">--选择分类--</option>
+                                                <option value="">--请选择分类--</option>
                                                 <c:forEach items="${firstCategory}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -118,10 +116,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">二级分类</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">二级分类</label>
+                                        <div class="col-sm-8">
                                             <form:select path="secondCategory" class="form-control">
-                                                <option value="">--选择分类--</option>
+                                                <option value="">--请选择分类--</option>
                                                 <c:forEach items="${secondCategory}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -129,10 +127,10 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">三级分类</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">三级分类</label>
+                                        <div class="col-sm-8">
                                             <form:select path="thirdCategory" class="form-control">
-                                                <option value="">--选择分类--</option>
+                                                <option value="">--请选择分类--</option>
                                                 <c:forEach items="${thirdCategory}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -140,28 +138,33 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">APP状态</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">APP状态</label>
+                                        <div class="col-sm-8">
                                             <input type="text" value="待审核" id="appStatus"  class="form-control" readonly placeholder="">
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">应用简介</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">应用简介</label>
+                                        <div class="col-sm-8">
+                                            <%--请输入本软件的相关信息，本信息作为软件的详细信息对软件进行介绍--%>
                                             <form:textarea path="appInfo" class="form-control" rows="5"></form:textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">LOGO图片</label>
-                                        <div class="col-sm-10">
+                                        <label class="col-sm-2 offset-sm-1 col-form-label">LOGO图片</label>
+                                        <div class="col-sm-8">
                                             <c:if test="${appVo.logoPicPath != null}">
                                                 <img src="${pageContext.request.contextPath}/${appVo.logoPicPath}" width="100" height="100"/>
                                             </c:if>
-                                            <input type="file" name="logoPic" class="form-control" accept=".jpg,.jpeg,.png" placeholder="">
+                                            <input type="file" name="logoPic" class="form-control" accept=".jpg,.jpeg,.png" placeholder="请选择.jpg,.jpeg,.png格式的图片">
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-gradient-primary mr-2">添加</button>
-                                    <button type="reset" class="btn btn-gradient-primary mr-2">重置</button>
+                                    <div class="row">
+                                        <div class="col-sm-4 offset-sm-4">
+                                            <button type="submit" class="btn btn-gradient-primary mr-2">添加</button>
+                                            <button type="reset" class="btn btn-gradient-primary mr-2">重置</button>
+                                        </div>
+                                    </div>
                                 </form:form>
                             </div>
                         </div>

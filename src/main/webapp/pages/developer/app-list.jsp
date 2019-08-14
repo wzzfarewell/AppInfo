@@ -194,9 +194,9 @@
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=2">修改版本</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit?appId=${app.appId}">修改</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit/${app.appId}">修改</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check?appId=${app.appId}">查看</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check/${app.appId}">查看</a>
                                                         <div class="dropdown-divider"></div>
                                                         <a class="dropdown-item" href="javascript:void(0);" onclick="deleteApp('${app.appId}','${app.appName}')">删除</a>
                                                         <div class="dropdown-divider"></div>
