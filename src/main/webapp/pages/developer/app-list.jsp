@@ -194,19 +194,19 @@
                                                         点击操作
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=1">新增版本</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=1" data-toggle="tooltip" data-placement="right" title="查看历史版本并添加新版本">新增版本</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=2">修改版本</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=2" data-toggle="tooltip" data-placement="right" title="对历史版本进行修改">修改版本</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit/${app.appId}">修改</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit/${app.appId}" data-toggle="tooltip" data-placement="right" title="修改APP基础信息">修改</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check/${app.appId}">查看</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check/${app.appId}" data-toggle="tooltip" data-placement="right" title="查看APP基础信息及历史版本信息">查看</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="deleteApp('${app.appId}','${app.appName}')">删除</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="deleteApp('${app.appId}','${app.appName}')" data-toggle="tooltip" data-placement="right" title="删除APP及其所有版本">删除</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}')">上架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}')" data-toggle="tooltip" data-placement="right" title="APP通过审核可选择上架">上架</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOff('${app.appId}')">下架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOff('${app.appId}')" data-toggle="tooltip" data-placement="right" title="上架的APP可选择下架">下架</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -260,6 +260,9 @@
 <script src="../../js/jquery-1.12.4.js"></script>
 
 <script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
     function deleteApp(appId,appName) {
         if(confirm('你确定要删除APP应用【'+appName+'】及其所有版本?')) {
             $.post("<%=basePath%>developer/app-delete",{"appId":appId},function(data){
