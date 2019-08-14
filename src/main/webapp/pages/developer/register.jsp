@@ -13,7 +13,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>APP信息管理平台</title>
+    <title>APP开发者平台-注册</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -44,7 +44,7 @@
                             </div>
                             <div class="form-group">
                                 <form:input path="devEmail" type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email"/>
-
+                            </div>
                             <div class="form-group">
                                 <form:input path="devPassword" type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="密码"/>
                             </div>
