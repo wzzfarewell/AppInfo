@@ -27,4 +27,5 @@ public interface VersionMapper {
 
     int deleteAppVersion(Long appId);
 
+    int deleteApk(Long versionid);
 }

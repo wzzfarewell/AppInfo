@@ -78,7 +78,7 @@
                                             <td>${obj.versionNo}</td>
                                             <td>${obj.versionSize}</td>
                                             <td>${obj.statusName}</td>
-                                            <td>${obj.downloadUrl}</td>
+                                            <td>${obj.apkFileName}</td>
                                             <td>${obj.updateTime}</td>
 
                                             <td><i class="mdi mdi-pencil-box icon-md"></i></td>
@@ -109,7 +109,7 @@
                             <div class="card-body">
                                 <h4 class="card-title">增加APP版本信息</h4>
 
-                                <form:form class="forms-sample" method="post" modelAttribute="appVersionVo" action="${pageContext.request.contextPath}/developer/addAppVersion" >
+                                <form:form class="forms-sample" method="post" modelAttribute="appVersionVo" action="${pageContext.request.contextPath}/developer/addAppVersion"  enctype="multipart/form-data" >
                                     <form:hidden path="appId" value="${appId}" />
                                     <form:hidden path="updateTime" value="" />
                                     <form:hidden path="statusName" value="未发布" />
@@ -132,18 +132,14 @@
                                             <form:textarea path="versionInfo" class="form-control" rows="5" placeholder="请输入本版本的相关信息,本信息作为该版本的详细信息进行版本介绍" />
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">apk名称</label>
-                                        <div class="col-sm-10">
-                                            <form:input path="apkFileName" type="text" class="form-control" />
-                                        </div>
-                                    </div>
+
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">apk文件</label>
                                         <div class="col-sm-10">
-                                            <form:input path="downloadUrl" type="text" class="form-control" />
+                                            <input type="file" accept="application/vnd.android.package-archive" name="apk" class="form-control">
                                         </div>
                                     </div>
+
                                     <button type="submit" class="btn btn-gradient-primary mr-2">保存</button>
                                     <a href="${pageContext.request.contextPath}/developer/app-list" class="btn btn-light">返回</a>
                                 </form:form>

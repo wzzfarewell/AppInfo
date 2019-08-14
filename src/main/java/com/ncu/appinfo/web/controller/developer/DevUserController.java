@@ -10,9 +10,15 @@ import com.ncu.appinfo.vo.AppSearchVo;
 import com.ncu.appinfo.vo.AppVersionVo;
 import com.ncu.appinfo.vo.AppVo;
 import com.ncu.appinfo.vo.UserVo;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -101,10 +108,12 @@ public class DevUserController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session){
-        if ((DevUser)session.getAttribute(Constant.CURRENT_USER)!=null){
+        DevUser user = (DevUser) session.getAttribute(Constant.CURRENT_USER);
+        if(user != null){
+            session.removeAttribute(Constant.CURRENT_USER);
             session.invalidate();
         }
-        return "redirect:login";
+        return "redirect:home";
     }
 
     @ModelAttribute("appStatus")
@@ -243,13 +252,36 @@ public class DevUserController {
     }
 
     @PostMapping("/addAppVersion")
-    public String addAppVersion(@Valid AppVersionVo appVersionVo, BindingResult bindingResult){
+    public String addAppVersion(@Valid AppVersionVo appVersionVo,MultipartFile apk, BindingResult bindingResult , HttpServletRequest request) throws IOException {
         if (bindingResult.hasErrors()){
             return "developer/addAppVersion";
         }
-        int result=appService.addAppVersion(appVersionVo);
-        System.out.println(result);
-        return "redirect:app-list";
+
+        String contentType = apk.getContentType();
+
+        if (contentType!=null && contentType.startsWith("application/vnd.android")) {
+
+            ServletContext context = request.getServletContext();
+            String realPath = context.getRealPath("/apk");//获取本地存储位置的绝对路径
+
+            String filename = apk.getOriginalFilename();//获取上传时的文件名称
+            appVersionVo.setApkFileName(filename);
+
+            filename = UUID.randomUUID().toString()+"."+ FilenameUtils.getExtension(filename);//创建一个新的文件名称    getExtension(name):获取文件后缀名
+            String downloadUrl = filename;
+            appVersionVo.setDownloadUrl(downloadUrl);
+
+            File f= new File(realPath, filename);
+            apk.transferTo(f);//将上传的文件存储到指定位置
+
+            int result = appService.addAppVersion(appVersionVo);
+            System.out.println(result);
+            return "redirect:app-list";
+        }
+
+        System.out.println("不是apk文件");
+        return "developer/addAppVersion";
+
     }
 
     @GetMapping("/updateAppVersion")
@@ -266,6 +298,21 @@ public class DevUserController {
         int result=appService.updateAppVersion(appVersionVo);
         System.out.println(result);
         return "redirect:app-list";
+    }
+
+    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> download(HttpServletRequest request,@RequestParam("filename") String filename) throws IOException {
+        String realPath = request.getServletContext().getRealPath("/apk");//获取下载文件的路径
+        File file = new File(realPath, filename);//把下载文件构成一个文件处理   filename:前台传过来的文件名称
+
+        HttpHeaders headers = new HttpHeaders();//设置头信息
+        String downloadFileName = new String(filename.getBytes("UTF-8"), "UTF-8");//设置响应的文件名
+
+        headers.setContentDispositionFormData("attachment", downloadFileName);
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+
+        // MediaType:互联网媒介类型 contentType：具体请求中的媒体类型信息
+        return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);
     }
 
     @GetMapping("/selectVersion/{id}")
@@ -290,6 +337,21 @@ public class DevUserController {
         Map<String,String> result=new HashMap<>();
         result.put("appStatus","已下架");
         return result;
+    }
+
+    @GetMapping("/deleteFile")
+    public String delFile(@RequestParam("filename") String filename,@RequestParam("versionid") Long versionid, HttpServletRequest request) {
+        String realPath = request.getServletContext().getRealPath("/apk");
+        String filePath= realPath+"/"+filename;
+        File delFile = new File(filePath);
+        if(delFile.isFile() && delFile.exists()) {
+            delFile.delete();
+            System.out.println("删除文件成功");
+        }else {
+            System.out.println("没有该文件，删除失败");
+        }
+        int result= versionService.deleteApk(versionid);
+        return "redirect:app-list";
     }
 
 }

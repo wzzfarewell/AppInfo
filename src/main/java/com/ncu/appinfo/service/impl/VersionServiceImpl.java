@@ -16,4 +16,9 @@ public class VersionServiceImpl implements VersionService {
     public Version selectVersion(Long id) {
         return versionMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public int deleteApk(Long versionid) {
+        return versionMapper.deleteApk(versionid);
+    }
 }

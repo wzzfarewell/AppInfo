@@ -79,7 +79,7 @@
                                             <td>${obj.versionNo}</td>
                                             <td>${obj.versionSize}</td>
                                             <td>${obj.statusName}</td>
-                                            <td>${obj.downloadUrl}</td>
+                                            <td>${obj.apkFileName}</td>
                                             <td>${obj.updateTime}</td>
 
                                             <td><a href="javascript:void(0);" onclick="onclick1('${obj.versionId}','${obj.statusName}')" > <i class="mdi mdi-pencil-box icon-md"></i></a></td>  <!-- 点这个按钮把obj的值填到表格 -->
@@ -135,15 +135,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">apk名称</label>
-                                        <div class="col-sm-10">
-                                            <form:input path="apkFileName" type="text" class="form-control" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">apk文件</label>
                                         <div class="col-sm-10">
-                                            <form:input path="downloadUrl" type="text" class="form-control" />
+                                            <span id="apkFileName"></span><span id="fileArea"><a id="download" href="javascript:alert('找不到文件!');">下载</a><a style="margin-left: 20px" id="delete" href="javascript:alert('找不到文件!');">删除</a></span>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-gradient-primary mr-2">保存</button>
@@ -190,10 +184,13 @@
                 $("#versionNo").val(data["versionNo"]);
                 $("#versionSize").val(data["versionSize"]);
                 $("#versionInfo").val(data["versionInfo"]);
-                $("#apkFileName").val(data["apkFileName"]);
-                $("#downloadUrl").val(data["downloadUrl"]);
+                $("#apkFileName").html(data["apkFileName"]);
                 $("#versionId").val(data["id"]);
                 $("#statusName").val(statusName);
+                if (data["downloadUrl"]!=""){
+                    $("#download").attr("href","${pageContext.request.contextPath}/developer/download?filename="+data["downloadUrl"]);
+                    $("#delete").attr("href","${pageContext.request.contextPath}/developer/deleteFile?filename="+data["downloadUrl"]+"&versionid="+data["id"]);
+                }
             }
         });
     }
