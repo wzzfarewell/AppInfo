@@ -145,9 +145,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-gradient-dark mb-2">查询</button>
-                                    &nbsp;&nbsp;
-                                    <button type="reset" class="btn btn-gradient-dark mb-2">重置</button>
+                                    <div class="row">
+                                        <div class="col-sm-4 offset-sm-4">
+                                            <button type="submit" class="btn btn-gradient-dark mb-2">查询</button>
+                                            &nbsp;&nbsp;
+                                            <button type="reset" class="btn btn-gradient-dark mb-2">重置</button>
+                                        </div>
+                                    </div>
                                 </form:form>
                             </div>
                         </div>

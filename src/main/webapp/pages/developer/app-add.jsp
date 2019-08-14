@@ -97,7 +97,7 @@
                                         <label class="col-sm-2 offset-sm-1 col-form-label">所属平台</label>
                                         <div class="col-sm-8">
                                             <form:select path="appPlatform" class="form-control">
-                                                <option value="">--请选择平台--</option>
+                                                <option disabled selected>--请选择平台--</option>
                                                 <c:forEach items="${appPlatform}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -108,7 +108,7 @@
                                         <label class="col-sm-2 offset-sm-1 col-form-label">一级分类</label>
                                         <div class="col-sm-8">
                                             <form:select path="firstCategory" class="form-control">
-                                                <option value="">--请选择分类--</option>
+                                                <option disabled selected>--请选择分类--</option>
                                                 <c:forEach items="${firstCategory}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -119,7 +119,7 @@
                                         <label class="col-sm-2 offset-sm-1 col-form-label">二级分类</label>
                                         <div class="col-sm-8">
                                             <form:select path="secondCategory" class="form-control">
-                                                <option value="">--请选择分类--</option>
+                                                <option disabled selected>--请选择分类--</option>
                                                 <c:forEach items="${secondCategory}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
@@ -130,7 +130,7 @@
                                         <label class="col-sm-2 offset-sm-1 col-form-label">三级分类</label>
                                         <div class="col-sm-8">
                                             <form:select path="thirdCategory" class="form-control">
-                                                <option value="">--请选择分类--</option>
+                                                <option disabled selected>--请选择分类--</option>
                                                 <c:forEach items="${thirdCategory}" var="item">
                                                     <option>${item}</option>
                                                 </c:forEach>
