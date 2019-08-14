@@ -196,8 +196,8 @@ public class DevUserController {
         return "redirect:app-list";
     }
 
-    @GetMapping("/app-edit")
-    public String editApp(@Valid Long appId,Model model){
+    @GetMapping("/app-edit/{appId}")
+    public String editApp(@PathVariable Long appId,Model model){
         AppVo appVo = appService.getAppVo(appId);
         model.addAttribute("appVo",appVo);
         return "developer/app-edit";
@@ -209,10 +209,10 @@ public class DevUserController {
         return "redirect:app-list";
     }
 
-    @GetMapping("/app-check")
+    @GetMapping("/app-check/{appId}")
     public String checkApp(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                            @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
-                           @Valid Long appId,
+                           @PathVariable Long appId,
                            Model model){
         AppVo appVo = appService.getAppVo(appId);
         model.addAttribute("appVo",appVo);
