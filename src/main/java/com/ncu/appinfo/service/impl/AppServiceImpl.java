@@ -245,6 +245,11 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
+    public int uncheckedApp(Long appId) {
+        return statusMapper.updateAppStatus(Constant.AppStatus.CHECKED_FAIL.getValue(), appId);
+    }
+
+    @Override
     public PageInfo<AppVersionVo> listAppVersion(int pageNum, int pageSize, Long id) {
         PageHelper.startPage(pageNum, pageSize);
 
