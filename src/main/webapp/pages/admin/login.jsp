@@ -58,7 +58,7 @@
                                     <input type="text" name="code" class="form-control" placeholder="">
                                 </div>
                                 <div class="col-sm-4">
-                                    <img id="checkCodeImg" src="/admin/authCode" onclick="changeImg();" alt="验证码">
+                                    <img id="checkCodeImg" src="<%=request.getContextPath()%>/admin/authCode" onclick="changeImg();" alt="验证码">
                                 </div>
                             </div>
                             <ul class="list-star">
