@@ -65,9 +65,15 @@ public class DevUserController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid UserVo userVo, BindingResult bindingResult, HttpSession session,
+    public String login(@Valid UserVo userVo, BindingResult bindingResult, String code, HttpSession session,
                         RedirectAttributes attributes){
         List<String> messages = new ArrayList<>();
+        LOG.info("输入的验证码：" + code);
+        if(!code.equals(session.getAttribute(Constant.CHECK_CODE))){
+            messages.add("验证码输入不正确，请重新输入！");
+            attributes.addFlashAttribute("messages", messages);
+            return "redirect:login";
+        }
         if(bindingResult.hasErrors()){
             for(FieldError error : bindingResult.getFieldErrors()){
                 messages.add(error.getDefaultMessage());
@@ -93,7 +99,14 @@ public class DevUserController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid DevUser user, BindingResult bindingResult){
+    public String register(@Valid DevUser user,HttpSession session, BindingResult bindingResult, String code,RedirectAttributes attributes){
+        LOG.info("输入的验证码：" + code);
+        List<String> messages = new ArrayList<>();
+        if(!code.equals(session.getAttribute(Constant.CHECK_CODE))){
+            messages.add("验证码输入不正确，请重新输入！");
+            attributes.addFlashAttribute("messages", messages);
+            return "redirect:register";
+        }
         if(bindingResult.hasErrors()){
             return "developer/register";
         }
@@ -242,7 +255,7 @@ public class DevUserController {
         if (method==2){
             return "forward:updateAppVersion";
         }
-        return null;
+        return "redirect:home";
     }
 
     @GetMapping("/addAppVersion")
