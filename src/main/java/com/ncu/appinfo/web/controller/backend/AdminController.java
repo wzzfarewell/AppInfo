@@ -112,7 +112,7 @@ public class AdminController {
     @PostMapping("/dev-user")
     @ResponseBody
     public PageInfo<DevUser> listDevUser(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "1") int pageSize,
+                                         @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,
                                          String devName){
         return devUserService.listDevUser(pageNum, pageSize, devName);
     }
