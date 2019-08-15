@@ -125,13 +125,16 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">版本大小</label>
                                         <div class="col-sm-10">
-                                            <form:input path="versionSize" type="text" class="form-control" placeholder="请输入版本大小,单位为Mb" />
+                                            <form:input path="versionSize" type="text" class="form-control" id="versionSize" placeholder="请输入版本大小,单位为Mb" />
                                         </div>
                                     </div>
+                                    <ul class="list-star" id="versionSizeVal" style="display: none;">
+                                        <li class="text-muted">版本大小为0-500的数字</li>
+                                    </ul>
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">版本简介</label>
                                         <div class="col-sm-10">
-                                            <form:textarea path="versionInfo" class="form-control" rows="5" placeholder="请输入本版本的相关信息,本信息作为该版本的详细信息进行版本介绍" />
+                                            <form:textarea path="versionInfo" class="form-control" id="versionInfo" rows="5" placeholder="请输入本版本的相关信息,本信息作为该版本的详细信息进行版本介绍" />
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -193,6 +196,43 @@
                 }
             }
         });
+
+
+        $(function () {
+
+            $(":submit").click(function () {
+
+                var versionSize = $("#versionSize").val();
+                var versionInfo = $("#versionInfo").val();
+
+                if(versionSize == ""){
+                    alert("版本大小不能为空!")
+                    return false;
+                }
+                if(versionInfo == ""){
+                    alert("版本简介不能为空!")
+                    return false;
+                }
+
+                var Pattern =   /^\+?[1-9][0-9]*$/;
+                var test = Pattern.test(versionSize);
+                if (parseInt(versionSize)<=0 || parseInt(versionSize)>=500 ){
+                    test =false;
+                }
+
+                if(!test){
+                    $("#versionSizeVal").show();
+                }else{
+                    $("#versionSizeVal").hide();
+                }
+
+                if(test){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        })
     }
 
 </script>
