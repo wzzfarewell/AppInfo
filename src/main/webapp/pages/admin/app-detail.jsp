@@ -234,7 +234,8 @@
                         </textarea>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-gradient-primary mr-2">通过审核</button>
+                                    <button type="submit" class="btn btn-gradient-primary mr-2">审核通过</button>
+                                    <a href="${pageContext.request.contextPath}/admin/app-uncheck/${appDetail.app.appId}" class="btn btn-light">审核不通过</a>
                                     <a href="${pageContext.request.contextPath}/admin/app-manage" class="btn btn-light">返回</a>
                                 </form>
                             </div>

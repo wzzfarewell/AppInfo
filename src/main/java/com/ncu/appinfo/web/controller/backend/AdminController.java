@@ -96,6 +96,17 @@ public class AdminController {
         return "redirect:" + request.getContextPath() + "/admin/app-manage";
     }
 
+    @GetMapping("/app-uncheck/{id}")
+    public String appUncheck(@PathVariable Long id, RedirectAttributes attributes, HttpServletRequest request){
+        int resultCount = appService.uncheckedApp(id);
+        if(resultCount > 0){
+            attributes.addFlashAttribute("message", "操作成功！");
+        }else{
+            attributes.addFlashAttribute("message", "操作失败！");
+        }
+        return "redirect:" + request.getContextPath() + "/admin/app-manage";
+    }
+
     @PostMapping("/name-search")
     public String nameSearch(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                              @RequestParam(value = "pageSize", defaultValue = "8") int pageSize,

@@ -31,6 +31,8 @@ public interface AppService {
 
     int checkedApp(Long appId);
 
+    int uncheckedApp(Long appId);
+
     PageInfo<AppVersionVo> listAppVersion(int pageNum, int pageSize, Long id);
 
     int addAppVersion(AppVersionVo appVersionVo);
