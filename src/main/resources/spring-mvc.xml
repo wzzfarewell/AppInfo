@@ -57,6 +57,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/developer/**"/>
             <mvc:exclude-mapping path="/developer/login"/>
+            <mvc:exclude-mapping path="/developer/register"/>
             <bean class="com.ncu.appinfo.web.interceptor.DevUserLoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
