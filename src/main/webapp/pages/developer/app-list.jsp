@@ -8,6 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +20,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>APP开发者平台</title>
+    <title>APP开发者平台-APP维护</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css">
@@ -140,9 +145,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-gradient-dark mb-2">查询</button>
-                                    &nbsp;&nbsp;
-                                    <button type="reset" class="btn btn-gradient-dark mb-2">重置</button>
+                                    <div class="row">
+                                        <div class="col-sm-4 offset-sm-4">
+                                            <button type="submit" class="btn btn-gradient-dark mb-2">查询</button>
+                                            &nbsp;&nbsp;
+                                            <button type="reset" class="btn btn-gradient-dark mb-2">重置</button>
+                                        </div>
+                                    </div>
                                 </form:form>
                             </div>
                         </div>
@@ -176,7 +185,7 @@
                                             <td>${app.appSize}</td>
                                             <td>${app.appPlatform}</td>
                                             <td>${app.firstCategory}>>${app.secondCategory}>>${app.thirdCategory}</td>
-                                            <td>${app.appStatus}</td>
+                                            <td id="appStatus${app.appId}">${app.appStatus}</td>
                                             <td>${app.version.downloadCount}</td>
                                             <td>${app.version.versionNo}</td>
                                             <td>
@@ -185,19 +194,19 @@
                                                         点击操作
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=1">新增版本</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=1" data-toggle="tooltip" data-placement="right" title="查看历史版本并添加新版本">新增版本</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">修改版本</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/appVersion?appId=${app.appId}&method=2" data-toggle="tooltip" data-placement="right" title="对历史版本进行修改">修改版本</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">修改</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-edit/${app.appId}" data-toggle="tooltip" data-placement="right" title="修改APP基础信息">修改</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">查看</a>
+                                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/developer/app-check/${app.appId}" data-toggle="tooltip" data-placement="right" title="查看APP基础信息及历史版本信息">查看</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">删除</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="deleteApp('${app.appId}','${app.appName}')" data-toggle="tooltip" data-placement="right" title="删除APP及其所有版本">删除</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">上架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOn('${app.appId}')" data-toggle="tooltip" data-placement="right" title="APP通过审核可选择上架">上架</a>
                                                         <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item" href="#">下架</a>
+                                                        <a class="dropdown-item" href="javascript:void(0);" onclick="putOff('${app.appId}')" data-toggle="tooltip" data-placement="right" title="上架的APP可选择下架">下架</a>
                                                     </div>
                                                 </div>
                                             </td>
@@ -247,6 +256,52 @@
 <!-- Custom js for this page-->
 <script src="../../js/dashboard.js"></script>
 <!-- End custom js for this page-->
+
+<script src="../../js/jquery-1.12.4.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+    function deleteApp(appId,appName) {
+        if(confirm('你确定要删除APP应用【'+appName+'】及其所有版本?')) {
+            $.post("<%=basePath%>developer/app-delete",{"appId":appId},function(data){
+                alert("APP应用【"+appName+"】及其所有版本删除成功！");
+                window.location.reload();
+            });
+        }
+    }
+
+    function putOn(id){
+        var status=$("#appStatus"+id).text();
+        if (status=="审核通过" || status=="已下架") {
+            $.ajax({url:"${pageContext.request.contextPath}/developer/putOn/"+id,success:function(data){
+                    result=JSON.parse(data);
+                    $("#appStatus"+id).html(result["appStatus"]);
+                }});
+        }
+        else {
+            alert("只能上架通过审核或下架的APP")
+        }
+
+    }
+
+    function putOff(id){
+        var status=$("#appStatus"+id).text();
+        if (status=="已上架" ) {
+            $.ajax({url:"${pageContext.request.contextPath}/developer/putOff/"+id,success:function(data){
+                    result=JSON.parse(data);
+                    $("#appStatus"+id).html(result["appStatus"]);
+                }});
+        }
+        else {
+            alert("只能下架已上架的APP")
+        }
+    }
+
+</script>
+
+
 </body>
 
 </html>

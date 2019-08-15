@@ -43,7 +43,7 @@
       #{offSaleTime,jdbcType=TIMESTAMP}, now(), now()
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.App" >
+  <insert id="insertSelective" parameterType="com.ncu.appinfo.entity.App" keyProperty="appId" useGeneratedKeys="true">
     insert into app
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="appId != null" >
@@ -206,5 +206,20 @@
     values (#{appId,jdbcType=BIGINT}, #{versionId,jdbcType=BIGINT}
       )
   </insert>
+
+  <update id="updateAppStatus" parameterType="java.lang.Long">
+    update app_status
+    set
+      status_id = #{statusId,jdbcType=BIGINT},
+      update_time = now()
+    where app_id = #{appId,jdbcType=BIGINT} AND ( status_id=2 OR status_id=4 OR status_id =5 )
+  </update>
+
+
+  <select id="selectDevUserByAppId" resultType="java.lang.Long" parameterType="java.lang.Long" >
+    select ad.dev_id
+    from app join app_dev ad on app.app_id = ad.app_id
+    where app.app_id=#{appId,jdbcType=BIGINT}
+  </select>
 
 </mapper>

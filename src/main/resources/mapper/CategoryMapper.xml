@@ -116,4 +116,36 @@
     from category
     where category_code = #{categoryCode}
   </select>
+
+  <select id="findIdByCategoryName" parameterType="java.lang.String" resultType="java.lang.Long">
+    select id
+    from category
+    where category_name = #{categoryName,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="addAppCategory" parameterType="java.lang.Long">
+    insert into app_category ( app_id,category_id
+      )
+    values (#{appId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}
+      )
+  </insert>
+
+  <update id="updateAppCategory">
+    update app_category ac
+    join category ca on ac.category_id = ca.id
+    set ac.category_id=#{categoryId,jdbcType=BIGINT}
+    where ac.app_id=#{appId,jdbcType=BIGINT} and ca.category_code=#{categoryCode,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteAppCategory" parameterType="java.lang.Long" >
+    delete from app_category
+    where app_id = #{appId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="findAppCategory" resultType="java.lang.String">
+    select c.category_name
+    from app_category ac join category c on ac.category_id = c.id
+    where ac.app_id = #{appId,jdbcType=BIGINT} and c.category_code = #{categoryCode,jdbcType=VARCHAR}
+  </select>
+
 </mapper>

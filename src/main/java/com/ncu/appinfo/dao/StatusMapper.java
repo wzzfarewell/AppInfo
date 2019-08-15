@@ -33,4 +33,17 @@ public interface StatusMapper {
     List<Status> listByVersionId(Long versionId);
 
     int addVersionStatus(@Param(value = "versionId") Long versionId,@Param(value = "statusId") Long statusId);
+
+    int updateVersionStatus(@Param(value = "versionId") Long versionId,@Param(value = "statusId") Long statusId);
+
+    Long findIdByStatusName(String statusName);
+
+    int addAppStatus(@Param(value = "appId") Long appId,@Param(value = "statusId") Long statusId);
+
+    int updateAppStatusByType(@Param(value = "appId") Long appId, @Param(value = "statusId") Long statusId,@Param(value = "typeCode") String typeCode);
+
+    int deleteAppStatus(Long appId);
+
+    String findAppStatus(@Param(value = "appId")Long appId,@Param(value = "typeCode")String typeCode);
+
 }

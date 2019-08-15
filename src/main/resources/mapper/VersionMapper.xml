@@ -172,4 +172,35 @@
     from app_version av join version v on av.version_id = v.id
     where av.app_id = #{id}
   </select>
+
+  <update id="updateAppVersion" parameterType="com.ncu.appinfo.entity.Version" >
+    update version
+    set
+      version_info = #{versionInfo,jdbcType=VARCHAR},
+      download_url = #{downloadUrl,jdbcType=VARCHAR},
+      version_size = #{versionSize,jdbcType=DECIMAL},
+      apk_file_name = #{apkFileName,jdbcType=VARCHAR},
+      update_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <delete id="deleteAppVersion" parameterType="java.lang.Long" >
+    delete  v,av,vs
+    from  version v
+    left join app_version av on v.id=av.version_id
+    left join version_status vs on v.id=vs.version_id
+    where av.app_id = #{appId,jdbcType=BIGINT}
+  </delete>
+
+  <update id="deleteApk" parameterType="java.lang.Long" >
+    update version
+    set
+      download_url = "",
+      version_size = 0,
+      apk_file_name = "",
+      create_time = now()
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
 </mapper>

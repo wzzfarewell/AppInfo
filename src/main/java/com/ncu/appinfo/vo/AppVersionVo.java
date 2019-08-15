@@ -13,12 +13,23 @@ import java.util.Date;
  * @date 2019/8/9
  **/
 public class AppVersionVo {
+
+    @NotNull(message = "appId不能为空")
     private Long appId;
 
-    @NotBlank(message = "软件名不能为空")
+    private Long versionId;
+
+    public Long getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(Long versionId) {
+        this.versionId = versionId;
+    }
+
     private String appName;
 
-    @NotBlank(message = "版本号能为空")
+    @NotBlank(message = "版本号不能为空")
     private String versionNo;
 
     @NotNull(message = "版本大小不能为空")

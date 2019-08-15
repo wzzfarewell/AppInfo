@@ -53,6 +53,12 @@
             <mvc:exclude-mapping path="/admin/authCode"/>
             <bean class="com.ncu.appinfo.web.interceptor.AdminLoginInterceptor"/>
         </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/developer/**"/>
+            <mvc:exclude-mapping path="/developer/login"/>
+            <bean class="com.ncu.appinfo.web.interceptor.DevUserLoginInterceptor"/>
+        </mvc:interceptor>
     </mvc:interceptors>
      <!--文件上传解析器 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

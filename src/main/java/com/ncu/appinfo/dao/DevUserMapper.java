@@ -25,4 +25,8 @@ public interface DevUserMapper {
     List<DevUser> listAll();
 
     List<DevUser> listByName(String name);
+
+    int addAppDev(@Param(value = "appId") Long appId, @Param(value = "devId") Long devId);
+
+    int deleteAppDev(Long appId);
 }

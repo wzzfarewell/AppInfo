@@ -46,6 +46,11 @@ public class AppServiceImpl implements AppService {
     }
 
     @Override
+    public App selectByPrimaryKey(Long appId) {
+        return appMapper.selectByPrimaryKey(appId);
+    }
+
+    @Override
     public PageInfo<AppVo> listAppByDevUser(int pageNum, int pageSize, Long dev_id, final AppSearchVo appSearchVo) {
         PageHelper.startPage(pageNum, pageSize);
         List<App> apps = appMapper.listByDevUser(dev_id);
@@ -255,6 +260,9 @@ public class AppServiceImpl implements AppService {
             appVersionVo.setVersionSize(version.getVersionSize());
             appVersionVo.setUpdateTime(version.getUpdateTime());
             appVersionVo.setDownloadUrl(version.getDownloadUrl());
+            appVersionVo.setVersionInfo(version.getVersionInfo());
+            appVersionVo.setApkFileName(version.getApkFileName());
+            appVersionVo.setVersionId(version.getId());
             List<Status> statuses = statusMapper.listByVersionId(version.getId());
             for(Status status : statuses) {
                 if(status.getTypeCode().equals(Constant.PUBLISH_STATUS)){
@@ -285,5 +293,131 @@ public class AppServiceImpl implements AppService {
         result+=statusMapper.addVersionStatus(versionId,statusId);
 
         return result;
+    }
+
+    @Override
+    public int updateAppVersion(AppVersionVo appVersionVo) {
+
+        if ("已发布".equals(appVersionVo.getStatusName())){
+            return 0;
+        }
+
+        int result=0;
+        Version version=new Version();
+
+        version.setVersionSize(appVersionVo.getVersionSize());
+        version.setVersionInfo(appVersionVo.getVersionInfo());
+        version.setApkFileName(appVersionVo.getApkFileName());
+        version.setDownloadUrl(appVersionVo.getDownloadUrl());
+        version.setId(appVersionVo.getVersionId());
+
+        Long statusId=9l;
+        result+= versionMapper.updateAppVersion(version);
+        result+= statusMapper.updateVersionStatus(version.getId(),statusId);
+
+        return result;
+    }
+
+    public int putOnApp(Long id){
+        Long statusId =4l;
+        return appMapper.updateAppStatus(id,statusId);
+    }
+    public int putOffApp(Long id){
+        Long statusId =5l;
+        return appMapper.updateAppStatus(id,statusId);
+    }
+
+
+    @Override
+    public int addAppDetail(AppVo appVo) {
+        int result=0;
+        App app = new App();
+        app.setAppName(appVo.getAppName());
+        app.setApkName(appVo.getApkName());
+        app.setSupportRom(appVo.getSupportRom());
+        app.setLanguage(appVo.getLanguage());
+        app.setAppSize(appVo.getAppSize());
+        app.setAppInfo(appVo.getAppInfo());
+        app.setLogoPicPath(appVo.getLogoPicPath());
+        result=appMapper.insertSelective(app);
+
+        Long appId=app.getAppId();
+        result+=categoryMapper.addAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()));
+        result+=categoryMapper.addAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getSecondCategory()));
+        result+=categoryMapper.addAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getThirdCategory()));
+
+        result+=statusMapper.addAppStatus(appId,statusMapper.findIdByStatusName(appVo.getAppPlatform()));
+        /*添加待审核状态*/
+        result+=statusMapper.addAppStatus(appId,new Long((long)1));
+        result+=devUserMapper.addAppDev(appId,appVo.getDevId());
+
+        return result;
+    }
+
+
+    @Override
+    public AppVo getAppVo(Long appId) {
+        App app=appMapper.selectByPrimaryKey(appId);
+        String firstCategory=categoryMapper.findAppCategory(appId,"一级分类");
+        String secondCategory=categoryMapper.findAppCategory(appId,"二级分类");
+        String thirdCategory=categoryMapper.findAppCategory(appId,"三级分类");
+        Version version=versionMapper.selectNewestByAppId(appId);
+        Long devId=appMapper.selectDevUserByAppId(appId);
+        String appStatus=statusMapper.findAppStatus(appId,"AppStatus");
+        String appPlatform=statusMapper.findAppStatus(appId,"AppPlatform");
+        String publishStatus=statusMapper.findAppStatus(appId,"PublishStatus");
+
+        AppVo appVo = new AppVo(
+                app.getAppId(),
+                app.getAppName(),
+                app.getApkName(),
+                app.getSupportRom(),
+                app.getAppSize(),
+                firstCategory,
+                secondCategory,
+                thirdCategory,
+                appStatus,
+                appPlatform,
+               publishStatus,
+                app.getLogoPicPath(),
+                version,
+                app.getAppInfo(),
+                app.getLanguage(),
+                devId
+        );
+        return appVo;
+    }
+
+    @Override
+    public int updateAppDetail(AppVo appVo) {
+        int result=0;
+        Long appId=appVo.getAppId();
+        App app = new App();
+        app.setAppId(appId);
+        app.setAppName(appVo.getAppName());
+        app.setApkName(appVo.getApkName());
+        app.setSupportRom(appVo.getSupportRom());
+        app.setLanguage(appVo.getLanguage());
+        app.setAppSize(appVo.getAppSize());
+        app.setAppInfo(appVo.getAppInfo());
+        app.setLogoPicPath(appVo.getLogoPicPath());
+        result=appMapper.updateByPrimaryKeySelective(app);
+
+        result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getFirstCategory()),"一级分类");
+        result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getSecondCategory()),"二级分类");
+        result+=categoryMapper.updateAppCategory(appId,categoryMapper.findIdByCategoryName(appVo.getThirdCategory()),"三级分类");
+
+        result+=statusMapper.updateAppStatusByType(appId,statusMapper.findIdByStatusName(appVo.getAppPlatform()),"AppPlatform");
+
+        return result;
+    }
+
+    @Override
+    public void deleteApp(Long appId) {
+        appMapper.deleteByPrimaryKey(appId);
+        categoryMapper.deleteAppCategory(appId);
+        devUserMapper.deleteAppDev(appId);
+        statusMapper.deleteAppStatus(appId);
+        versionMapper.deleteAppVersion(appId);
     }
 }

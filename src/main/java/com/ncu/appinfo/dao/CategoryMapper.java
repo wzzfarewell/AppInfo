@@ -1,6 +1,7 @@
 package com.ncu.appinfo.dao;
 
 import com.ncu.appinfo.entity.Category;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,4 +21,14 @@ public interface CategoryMapper {
     List<Category> listByAppId(Long appId);
 
     List<String> listNameByCode(String categoryCode);
+
+    Long findIdByCategoryName(String categoryName);
+
+    int addAppCategory(@Param(value = "appId") Long appId, @Param(value = "categoryId") Long categoryId);
+
+    int updateAppCategory(@Param(value = "appId") Long appId, @Param(value = "categoryId") Long categoryId,@Param(value = "categoryCode") String categoryCode);
+
+    int deleteAppCategory(Long appId);
+
+    String findAppCategory(@Param(value = "appId")Long appId,@Param(value = "categoryCode")String categoryCode);
 }
